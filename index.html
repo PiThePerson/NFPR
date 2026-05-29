@@ -3,1077 +3,309 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NeuronFRAMES — Accessible AI-Assisted Rehabilitation</title>
+  <title>NeuronFRAMES | AI-Assisted Rehabilitation in Clinical Use</title>
+  <meta name="description" content="AI-assisted rehabilitation platform used in Physical, Occupational and Speech Therapy at King Chulalongkorn Memorial Hospital, treating 250+ patients a month." />
+  <link rel="canonical" href="https://neuronframes.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="NeuronFRAMES" />
+  <meta property="og:title" content="NeuronFRAMES | AI-Assisted Rehabilitation in Clinical Use" />
+  <meta property="og:description" content="AI-assisted rehabilitation platform used in Physical, Occupational and Speech Therapy at King Chulalongkorn Memorial Hospital, treating 250+ patients a month." />
+  <meta property="og:url" content="https://neuronframes.com/" />
+  <meta property="og:image" content="https://neuronframes.com/nfl1.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="th_TH" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="NeuronFRAMES | AI-Assisted Rehabilitation in Clinical Use" />
+  <meta name="twitter:description" content="AI-assisted rehabilitation platform used in Physical, Occupational and Speech Therapy at King Chulalongkorn Memorial Hospital, treating 250+ patients a month." />
+  <meta name="twitter:image" content="https://neuronframes.com/nfl1.png" />
+  <meta name="theme-color" content="#0a5fff" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='56' font-size='56'>🧠</text></svg>">
-  <style>
-    /* ─── Reset & Base ──────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --navy:   #ffffff;
-      --blue:   #f0f4f8;
-      --accent: #0066dd;
-      --cyan:   #0088cc;
-      --teal:   #00a885;
-      --glass:  rgba(0,0,0,0.03);
-      --border: rgba(0,0,0,0.10);
-      --text:   #333333;
-      --muted:  #5a6a7a;
-      --white:  #1a1a2e;
-      --card:   rgba(255,255,255,0.85);
-      --radius: 20px;
-      --shadow: 0 8px 40px rgba(0,0,0,0.08);
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #f8f9fc;
-      color: var(--text);
-      overflow-x: hidden;
-      line-height: 1.7;
-    }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
-
-    /* ─── Scrollbar ─────────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: #eee; }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
-
-    /* ─── Utility ───────────────────────────────────────────────── */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-    .section { padding: 110px 0; }
-    .section-label {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-size: .75rem; font-weight: 700; letter-spacing: .18em;
-      text-transform: uppercase; color: var(--accent);
-      background: rgba(0,102,221,.08); border: 1px solid rgba(0,102,221,.18);
-      padding: 6px 18px; border-radius: 50px; margin-bottom: 1.2rem;
-    }
-    .section-label::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-    h1,h2,h3,h4 { font-weight: 700; line-height: 1.2; }
-    h2 { font-size: clamp(2rem, 4vw, 3rem); }
-    .gradient-text {
-      background: linear-gradient(135deg, var(--accent), #0055bb, var(--teal));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 14px 32px; border-radius: 50px; font-weight: 600;
-      font-size: .95rem; cursor: pointer; transition: all .3s ease;
-      border: none; white-space: nowrap;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #0055bb);
-      color: #ffffff;
-      box-shadow: 0 4px 20px rgba(0,102,221,.25);
-    }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,102,221,.35); }
-    .btn-outline {
-      background: transparent;
-      border: 2px solid rgba(0,0,0,.15);
-      color: var(--white);
-    }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
-    .divider { height: 1px; background: var(--border); margin: 0; }
-
-    /* ─── Animated Bg Orbs ──────────────────────────────────────── */
-    .orb-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-    .orb {
-      position: absolute; border-radius: 50%;
-      filter: blur(120px); opacity: .07; animation: floatOrb 20s ease-in-out infinite;
-    }
-    .orb-1 { width: 600px; height: 600px; background: #0066dd; top: -200px; left: -150px; animation-delay: 0s; }
-    .orb-2 { width: 500px; height: 500px; background: #0088cc; bottom: 10%; right: -100px; animation-delay: -8s; }
-    .orb-3 { width: 400px; height: 400px; background: #00a885; top: 50%; left: 40%; animation-delay: -14s; }
-    @keyframes floatOrb {
-      0%,100% { transform: translate(0,0) scale(1); }
-      33%      { transform: translate(60px,-40px) scale(1.08); }
-      66%      { transform: translate(-40px,60px) scale(.95); }
-    }
-
-    /* ─── Navigation ────────────────────────────────────────────── */
-    #navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-      padding: 20px 0; transition: all .4s ease;
-    }
-    #navbar.scrolled {
-      background: rgba(255,255,255,.95);
-      backdrop-filter: blur(20px);
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-      box-shadow: 0 2px 20px rgba(0,0,0,.08);
-    }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
-    .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-icon {
-      width: 44px; height: 44px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), var(--cyan));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; font-weight: 900; color: white;
-      box-shadow: 0 0 20px rgba(0,119,255,.4);
-    }
-    .logo-img { height: 64px; width: auto; display: block; filter: drop-shadow(0 0 4px rgba(0,0,0,.1)); }
-    .logo-text { font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; }
-    .logo-text span { color: var(--accent); }
-    .nav-links { display: flex; align-items: center; gap: 2rem; }
-    .nav-links a {
-      font-size: .9rem; font-weight: 500; color: var(--muted);
-      transition: color .3s; position: relative;
-    }
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
-      height: 2px; background: var(--cyan); transform: scaleX(0);
-      transition: transform .3s; border-radius: 2px;
-    }
-    .nav-links a:hover { color: var(--white); }
-    .nav-links a:hover::after { transform: scaleX(1); }
-    .nav-cta { padding: 10px 24px; font-size: .875rem; }
-
-    /* ─── Hero ──────────────────────────────────────────────────── */
-    #hero {
-      min-height: 100vh; display: flex; align-items: center;
-      position: relative; padding: 140px 0 80px;
-    }
-    .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(0,102,221,.08); border: 1px solid rgba(0,102,221,.2);
-      padding: 8px 20px; border-radius: 50px; font-size: .8rem;
-      font-weight: 600; color: var(--accent); margin-bottom: 1.5rem;
-      animation: fadeSlideUp .8s ease both;
-    }
-    .hero-badge span { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.5)} }
-    .hero-title {
-      font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-      line-height: 1.05; margin-bottom: 1.5rem;
-      animation: fadeSlideUp .9s .1s ease both;
-    }
-    .hero-sub {
-      font-size: 1.1rem; color: var(--muted); max-width: 500px;
-      margin-bottom: 2.5rem; animation: fadeSlideUp 1s .2s ease both;
-    }
-    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeSlideUp 1s .3s ease both; }
-    .hero-stats {
-      display: flex; gap: 2rem; margin-top: 3rem;
-      animation: fadeSlideUp 1s .4s ease both;
-    }
-    .stat { }
-    .stat-num { font-size: 2rem; font-weight: 800; color: var(--white); }
-    .stat-num span { color: var(--accent); }
-    .stat-label { font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
-
-    .hero-visual {
-      position: relative; animation: fadeSlideUp 1s .2s ease both;
-    }
-    .hero-card {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 28px; padding: 2.5rem;
-      box-shadow: var(--shadow);
-      position: relative; overflow: hidden;
-    }
-    .hero-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), var(--teal), transparent);
-    }
-    .brain-visual {
-      width: 100%; aspect-ratio: 1;
-      background: radial-gradient(ellipse at 40% 40%, rgba(0,102,221,.08) 0%, transparent 70%),
-                  radial-gradient(ellipse at 70% 70%, rgba(0,168,133,.06) 0%, transparent 60%);
-      border-radius: 20px; display: flex; align-items: center; justify-content: center;
-      position: relative; min-height: 280px;
-    }
-    .brain-ring {
-      position: absolute; border-radius: 50%; border: 1.5px solid;
-      animation: rotate linear infinite;
-    }
-    .ring-1 { width: 200px; height: 200px; border-color: rgba(0,102,221,.25); animation-duration: 12s; }
-    .ring-2 { width: 150px; height: 150px; border-color: rgba(0,136,204,.3); animation-duration: 8s; animation-direction: reverse; }
-    .ring-3 { width: 100px; height: 100px; border-color: rgba(0,168,133,.35); animation-duration: 5s; }
-    @keyframes rotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-    .brain-core {
-      width: 144px; height: 144px; border-radius: 50%; z-index: 2;
-      background: #ffffff;
-      box-shadow: 0 0 30px rgba(0,102,221,.2);
-      display: flex; align-items: center; justify-content: center; font-size: 2rem;
-      overflow: hidden;
-    }
-    .neural-dot {
-      position: absolute; width: 8px; height: 8px; border-radius: 50%;
-      background: var(--accent); animation: nodeFloat 3s ease-in-out infinite;
-    }
-    @keyframes nodeFloat { 0%,100%{transform:scale(1);opacity:.8} 50%{transform:scale(1.5);opacity:1} }
-    .floating-badge {
-      position: absolute; background: #ffffff;
-      border: 1px solid var(--border); border-radius: 14px;
-      padding: 10px 16px;
-      font-size: .8rem; font-weight: 600; display: flex; align-items: center; gap: 8px;
-      animation: badgeFloat 4s ease-in-out infinite;
-      box-shadow: 0 4px 16px rgba(0,0,0,.06);
-    }
-    @keyframes badgeFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-    .floating-badge .dot { width: 8px; height: 8px; border-radius: 50%; }
-    .fb-top  { top: 10%; right: -20px; animation-delay: 0s; }
-    .fb-bot  { bottom: 15%; left: -20px; animation-delay: -2s; }
-    .fb-mid  { top: 45%; right: -25px; animation-delay: -1s; }
-
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ─── Section Common ────────────────────────────────────────── */
-    .section-header { text-align: center; max-width: 700px; margin: 0 auto 5rem; }
-    .section-header .section-label { margin-bottom: 1rem; }
-    .section-header p { color: var(--muted); font-size: 1.05rem; margin-top: 1rem; }
-
-    /* ─── What Is ───────────────────────────────────────────────── */
-    #what-is { position: relative; }
-    .what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-    .what-visual {
-      position: relative;
-    }
-    .what-card-stack { position: relative; }
-    .wc {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 2rem;
-      margin-bottom: 1rem;
-      transition: transform .3s; cursor: default;
-      box-shadow: 0 2px 12px rgba(0,0,0,.04);
-    }
-    .wc:hover { transform: translateX(8px); }
-    .wc-icon { font-size: 2rem; margin-bottom: .8rem; }
-    .wc h4 { font-size: 1rem; margin-bottom: .4rem; color: var(--white); }
-    .wc p  { font-size: .875rem; color: var(--muted); }
-    .what-content h2 { margin-bottom: 1.5rem; }
-    .what-content p { color: var(--muted); margin-bottom: 1rem; font-size: 1rem; }
-    .impact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
-    .impact-item {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 14px; padding: 1.2rem;
-      display: flex; align-items: flex-start; gap: .8rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,.03);
-    }
-    .impact-item .icon { font-size: 1.4rem; flex-shrink: 0; }
-    .impact-item h4 { font-size: .85rem; color: var(--white); margin-bottom: .2rem; }
-    .impact-item p  { font-size: .78rem; color: var(--muted); }
-
-    /* ─── Modes ─────────────────────────────────────────────────── */
-    #modes { position: relative; }
-    .modes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-    .mode-card {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 28px; padding: 2.5rem;
-      transition: all .4s ease; position: relative; overflow: hidden;
-      cursor: default; box-shadow: 0 2px 12px rgba(0,0,0,.04);
-    }
-    .mode-card::before {
-      content: ''; position: absolute; inset: 0; border-radius: 28px;
-      background: linear-gradient(135deg, transparent 0%, rgba(0,102,221,.03) 100%);
-      opacity: 0; transition: opacity .4s;
-    }
-    .mode-card:hover { transform: translateY(-8px); border-color: rgba(0,102,221,.25); box-shadow: 0 12px 40px rgba(0,0,0,.1); }
-    .mode-card:hover::before { opacity: 1; }
-    .mode-num {
-      position: absolute; top: 2rem; right: 2rem;
-      font-size: 4rem; font-weight: 900; color: rgba(0,0,0,.04);
-      line-height: 1; user-select: none;
-    }
-    .mode-icon {
-      width: 64px; height: 64px; border-radius: 18px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.8rem; margin-bottom: 1.5rem;
-      position: relative;
-    }
-    .mode-icon::after {
-      content: ''; position: absolute; inset: -4px;
-      border-radius: 22px; border: 1px solid;
-      animation: rotateAura 4s linear infinite;
-    }
-    .mode-card:nth-child(1) .mode-icon { background: rgba(0,102,221,.1); }
-    .mode-card:nth-child(1) .mode-icon::after { border-color: rgba(0,102,221,.25); }
-    .mode-card:nth-child(2) .mode-icon { background: rgba(0,168,133,.1); }
-    .mode-card:nth-child(2) .mode-icon::after { border-color: rgba(0,168,133,.25); }
-    .mode-card:nth-child(3) .mode-icon { background: rgba(140,0,220,.08); }
-    .mode-card:nth-child(3) .mode-icon::after { border-color: rgba(140,0,220,.25); }
-    .mode-card:nth-child(4) .mode-icon { background: rgba(220,80,0,.08); }
-    .mode-card:nth-child(4) .mode-icon::after { border-color: rgba(220,80,0,.25); }
-    @keyframes rotateAura { from{transform:rotate(0)} to{transform:rotate(360deg)} }
-    .mode-tag {
-      display: inline-block; font-size: .7rem; font-weight: 700;
-      letter-spacing: .12em; text-transform: uppercase;
-      padding: 4px 12px; border-radius: 50px; margin-bottom: 1rem;
-    }
-    .tag-blue  { background: rgba(0,102,221,.1); color: #0066dd; }
-    .tag-teal  { background: rgba(0,168,133,.1); color: #008866; }
-    .tag-purple{ background: rgba(140,0,220,.08); color: #7700bb; }
-    .tag-orange{ background: rgba(220,80,0,.08); color: #cc5500; }
-    .mode-card h3 { font-size: 1.4rem; margin-bottom: 1rem; color: var(--white); }
-    .mode-card p  { color: var(--muted); font-size: .95rem; margin-bottom: 1.5rem; }
-    .mode-features { list-style: none; }
-    .mode-features li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: .875rem; color: var(--muted); padding: 6px 0;
-      border-bottom: 1px solid rgba(0,0,0,.05);
-    }
-    .mode-features li:last-child { border-bottom: none; }
-    .mode-features li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-
-    /* ─── Milestones ──────────────────────────────────────────── */
-    #milestones { position: relative; }
-    .collab-intro { text-align: center; max-width: 680px; margin: 0 auto 4rem; color: var(--muted); font-size: 1.05rem; }
-    .collab-tracks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 4rem; }
-    .collab-track {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 24px; padding: 2.5rem 2rem;
-      text-align: center;
-      transition: all .3s; position: relative; overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,.04);
-    }
-    .collab-track:hover { transform: translateY(-6px); border-color: var(--accent); }
-    .collab-track::after {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-      height: 3px;
-    }
-    .collab-track:nth-child(1)::after { background: linear-gradient(90deg, var(--accent), var(--cyan)); }
-    .collab-track:nth-child(2)::after { background: linear-gradient(90deg, var(--teal), #00d4ff); }
-    .collab-track:nth-child(3)::after { background: linear-gradient(90deg, #7700bb, #0066dd); }
-    .collab-icon { font-size: 2.8rem; margin-bottom: 1rem; }
-    .collab-track h3 { font-size: 1.15rem; margin-bottom: .8rem; color: var(--white); }
-    .collab-track p  { font-size: .875rem; color: var(--muted); }
-    .partner-logos {
-      display: flex; align-items: center; justify-content: center;
-      flex-wrap: wrap; gap: 2rem;
-    }
-    .partner-pill {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 14px; padding: 1rem 2rem;
-      font-size: .875rem; font-weight: 600; color: var(--muted);
-      transition: all .3s; white-space: nowrap;
-      display: flex; align-items: center; gap: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.03);
-    }
-    .partner-pill:hover { border-color: var(--accent); color: var(--white); }
-    .partner-pill span { font-size: 1.2rem; }
-
-    /* ─── Awards ─────────────────────────────────────────────────── */
-    #awards { position: relative; }
-    .awards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 4rem; }
-    .award-card {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 24px; padding: 2rem;
-      text-align: center;
-      transition: all .3s; position: relative; overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,.04);
-    }
-    .award-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
-    .award-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--teal));
-    }
-    .award-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-    .award-year { font-size: .75rem; font-weight: 700; color: var(--accent); letter-spacing: .12em; text-transform: uppercase; margin-bottom: .5rem; }
-    .award-card h3 { font-size: 1rem; color: var(--white); margin-bottom: .5rem; }
-    .award-card p { font-size: .8rem; color: var(--muted); }
-    .publications { }
-    .pub-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
-    .pub-header h3 { font-size: 1.4rem; color: var(--white); }
-    .pub-list { display: grid; gap: 1rem; }
-    .pub-item {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 16px; padding: 1.5rem 2rem;
-      display: flex; gap: 1.5rem; align-items: flex-start;
-      transition: all .3s; box-shadow: 0 2px 8px rgba(0,0,0,.03);
-    }
-    .pub-item:hover { border-color: rgba(0,102,221,.3); background: rgba(0,102,221,.03); }
-    .pub-year {
-      min-width: 60px; background: rgba(0,102,221,.1);
-      border-radius: 10px; text-align: center; padding: .6rem;
-      font-size: .8rem; font-weight: 700; color: var(--accent);
-    }
-    .pub-info h4 { font-size: .95rem; color: var(--white); margin-bottom: .4rem; }
-    .pub-info p  { font-size: .82rem; color: var(--muted); }
-    .pub-info .journal { color: var(--accent); font-style: italic; font-size: .8rem; margin-top: .3rem; }
-
-    /* ─── Demo ───────────────────────────────────────────────────── */
-    #demo { position: relative; }
-    .demo-tabs {
-      display: flex; justify-content: center; gap: 1rem;
-      flex-wrap: wrap; margin-bottom: 3rem;
-    }
-    .demo-tab {
-      padding: 10px 22px; border-radius: 50px;
-      border: 1px solid var(--border); background: #ffffff;
-      color: var(--muted); font-size: .875rem; font-weight: 600;
-      cursor: pointer; transition: all .3s;
-    }
-    .demo-tab.active, .demo-tab:hover {
-      background: linear-gradient(135deg, var(--accent), #0055bb);
-      border-color: transparent; color: #ffffff;
-      box-shadow: 0 4px 20px rgba(0,102,221,.25);
-    }
-    .demo-panels { }
-    .demo-panel { display: none; animation: fadeIn .5s ease; }
-    .demo-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-    @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-    .demo-screen {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 24px; overflow: hidden;
-      box-shadow: var(--shadow); position: relative;
-    }
-    .demo-screen-bar {
-      background: #f5f6f8; padding: 12px 16px;
-      display: flex; align-items: center; gap: 8px;
-      border-bottom: 1px solid var(--border);
-    }
-    .dsb-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .dsb-dot:nth-child(1){background:#ff5f57} .dsb-dot:nth-child(2){background:#ffc22d} .dsb-dot:nth-child(3){background:#27c840}
-    .demo-viz {
-      padding: 2.5rem; min-height: 260px;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 1.5rem;
-      position: relative; overflow: hidden;
-    }
-    /* PT animation */
-    .pt-figure { display: flex; flex-direction: column; align-items: center; gap: .5rem; }
-    .pt-body { width: 30px; height: 60px; background: linear-gradient(var(--accent), var(--cyan)); border-radius: 30px; animation: ptMove 2s ease-in-out infinite; }
-    @keyframes ptMove { 0%,100%{transform:rotate(-10deg)} 50%{transform:rotate(10deg)} }
-    .pt-bar { display: flex; gap: 6px; align-items: flex-end; margin-top: 1rem; }
-    .pt-bar-item { width: 18px; border-radius: 4px 4px 0 0; background: linear-gradient(var(--accent), var(--cyan)); animation: barGrow 1.8s ease-in-out infinite; }
-    .pt-bar-item:nth-child(1){height:40px;animation-delay:0s}
-    .pt-bar-item:nth-child(2){height:55px;animation-delay:.2s}
-    .pt-bar-item:nth-child(3){height:70px;animation-delay:.4s}
-    .pt-bar-item:nth-child(4){height:50px;animation-delay:.6s}
-    .pt-bar-item:nth-child(5){height:80px;animation-delay:.8s}
-    @keyframes barGrow { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(.7)} }
-    /* Game animation */
-    .game-canvas {
-      width: 100%; max-width: 280px; aspect-ratio: 16/10;
-      background: #f0f4f8; border-radius: 12px;
-      position: relative; overflow: hidden;
-      border: 1px solid rgba(0,168,133,.2);
-    }
-    .game-player {
-      position: absolute; bottom: 15%; left: 50%;
-      transform: translateX(-50%);
-      width: 20px; height: 30px;
-      background: linear-gradient(var(--teal), var(--accent));
-      border-radius: 4px; animation: playerPulse 1s ease-in-out infinite;
-    }
-    @keyframes playerPulse { 0%,100%{box-shadow:0 0 10px var(--teal)} 50%{box-shadow:0 0 25px var(--teal)} }
-    .game-target {
-      position: absolute; width: 16px; height: 16px;
-      border-radius: 50%; animation: targetMove 2s ease-in-out infinite;
-    }
-    .game-target:nth-child(2){background:#ff6b6b;top:20%;left:20%;animation-delay:0s}
-    .game-target:nth-child(3){background:#ffd93d;top:30%;left:65%;animation-delay:.5s}
-    .game-target:nth-child(4){background:#6bcb77;top:55%;left:35%;animation-delay:1s}
-    @keyframes targetMove { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.3);opacity:.7} }
-    .game-score {
-      position: absolute; top: 10px; right: 12px;
-      font-size: .7rem; font-weight: 700; color: var(--teal); letter-spacing: .1em;
-    }
-    .game-level {
-      position: absolute; top: 10px; left: 12px;
-      font-size: .7rem; font-weight: 700; color: var(--accent);
-    }
-    /* ITS animation */
-    .its-display {
-      width: 100%; max-width: 280px; background: rgba(140,0,220,.04);
-      border: 1px solid rgba(140,0,220,.15); border-radius: 12px;
-      padding: 1.2rem;
-    }
-    .its-wave {
-      height: 60px; position: relative; overflow: hidden;
-      background: rgba(0,0,0,.04); border-radius: 8px; margin-bottom: 1rem;
-    }
-    .its-wave-line {
-      position: absolute; inset: 0;
-      background: repeating-linear-gradient(90deg,
-        transparent 0px, transparent 4px,
-        rgba(180,0,255,.3) 4px, rgba(180,0,255,.3) 5px);
-    }
-    .its-wave-sine {
-      position: absolute; inset: 0; display: flex; align-items: center;
-    }
-    .its-wave-sine svg { width: 100%; animation: waveMarch 1s linear infinite; }
-    @keyframes waveMarch { from{transform:translateX(-20px)} to{transform:translateX(0)} }
-    .its-metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: .5rem; }
-    .its-metric { background: rgba(140,0,220,.05); border-radius: 8px; padding: .5rem; text-align: center; }
-    .its-metric .val { font-size: .85rem; font-weight: 700; color: #7700bb; }
-    .its-metric .lbl { font-size: .65rem; color: var(--muted); }
-    /* Speech animation */
-    .speech-display {
-      display: flex; flex-direction: column; align-items: center; gap: 1rem; width: 100%;
-    }
-    .speech-mic {
-      width: 60px; height: 60px; border-radius: 50%;
-      background: linear-gradient(135deg, #ff6b00, #ff9a3c);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem; animation: micPulse 1.5s ease-in-out infinite;
-    }
-    @keyframes micPulse {
-      0%,100%{box-shadow:0 0 0 0 rgba(255,107,0,.4)}
-      50%{box-shadow:0 0 0 20px rgba(255,107,0,0)}
-    }
-    .speech-bars { display: flex; align-items: center; gap: 4px; height: 50px; }
-    .speech-bar {
-      width: 6px; border-radius: 3px;
-      background: linear-gradient(#ff9a3c, #ff6b00);
-      animation: speechBar 0.8s ease-in-out infinite;
-    }
-    .speech-bar:nth-child(1){animation-delay:0s}
-    .speech-bar:nth-child(2){animation-delay:.1s}
-    .speech-bar:nth-child(3){animation-delay:.2s}
-    .speech-bar:nth-child(4){animation-delay:.3s}
-    .speech-bar:nth-child(5){animation-delay:.4s}
-    .speech-bar:nth-child(6){animation-delay:.3s}
-    .speech-bar:nth-child(7){animation-delay:.2s}
-    @keyframes speechBar {
-      0%,100%{height:10px} 50%{height:40px}
-    }
-    .speech-text {
-      background: rgba(220,80,0,.06); border: 1px solid rgba(220,80,0,.15);
-      border-radius: 12px; padding: .6rem 1.2rem;
-      font-size: .8rem; color: #cc5500; font-weight: 500;
-    }
-
-    .demo-info h3 { font-size: 1.6rem; margin-bottom: 1rem; color: var(--white); }
-    .demo-info p  { color: var(--muted); font-size: .95rem; margin-bottom: 1.5rem; }
-    .demo-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-    .dm-item { background: #ffffff; border: 1px solid var(--border); border-radius: 14px; padding: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,.03); }
-    .dm-val { font-size: 1.6rem; font-weight: 800; color: var(--white); }
-    .dm-val span { font-size: .9rem; color: var(--accent); }
-    .dm-lbl { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-    .demo-highlight {
-      background: rgba(0,102,221,.04); border: 1px solid rgba(0,102,221,.15);
-      border-radius: 16px; padding: 1.2rem;
-    }
-    .demo-highlight p { font-size: .875rem; color: var(--muted); margin-bottom: 0; }
-    .demo-highlight strong { color: var(--accent); font-weight: 600; }
-
-    /* ─── Contact ─────────────────────────────────────────────────── */
-    #contact { position: relative; }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; }
-    .contact-info h2 { margin-bottom: 1rem; }
-    .contact-info p  { color: var(--muted); margin-bottom: 2rem; font-size: 1rem; }
-    .contact-ways { display: flex; flex-direction: column; gap: 1rem; }
-    .cw-item {
-      display: flex; align-items: center; gap: 1rem;
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 16px; padding: 1rem 1.5rem;
-      transition: all .3s; box-shadow: 0 2px 8px rgba(0,0,0,.03);
-    }
-    .cw-item:hover { border-color: var(--accent); }
-    .cw-item--link { cursor: pointer; border-color: rgba(0,102,221,.2); background: rgba(0,102,221,.03); }
-    .cw-item--link:hover { border-color: var(--accent); background: rgba(0,102,221,.06); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.06); }
-    .cw-item--link .cw-val { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
-    .cw-icon { font-size: 1.4rem; }
-    .cw-label { font-size: .8rem; color: var(--muted); }
-    .cw-val   { font-size: .95rem; color: var(--white); font-weight: 500; }
-    .contact-form {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 28px; padding: 2.5rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,.06);
-    }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-group { margin-bottom: 1.2rem; }
-    .form-group label { display: block; font-size: .8rem; font-weight: 600; color: var(--muted); margin-bottom: .5rem; text-transform: uppercase; letter-spacing: .1em; }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%; background: #f8f9fc;
-      border: 1px solid var(--border); border-radius: 12px;
-      padding: 12px 16px; color: #333; font-size: .95rem;
-      font-family: inherit; transition: border-color .3s, box-shadow .3s;
-      resize: none;
-    }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none; border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(0,102,221,.1);
-    }
-    .form-group select option { background: #ffffff; }
-    .form-submit { width: 100%; padding: 14px; font-size: 1rem; border-radius: 14px; }
-
-    /* ─── Footer ─────────────────────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 4rem 0 2rem;
-      position: relative;
-      background: #f0f2f5;
-    }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
-    .footer-brand p { color: var(--muted); font-size: .875rem; margin: 1rem 0 1.5rem; max-width: 280px; }
-    .footer-social { display: flex; gap: .7rem; }
-    .social-btn {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: #ffffff; border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: .9rem; transition: all .3s; cursor: pointer;
-    }
-    .social-btn:hover { border-color: var(--accent); background: rgba(0,102,221,.08); }
-    .footer-col h4 { font-size: .85rem; font-weight: 700; color: var(--white); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: .1em; }
-    .footer-col a { display: block; font-size: .85rem; color: var(--muted); margin-bottom: .5rem; transition: color .3s; }
-    .footer-col a:hover { color: var(--accent); }
-    .footer-bottom {
-      border-top: 1px solid var(--border); padding-top: 1.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: .8rem; color: var(--muted);
-    }
-    .footer-bottom span { color: var(--accent); }
-
-    /* ─── Clinical Value & Pilot Results ─────────────────────────── */
-    #clinical-value { position: relative; }
-    #pilot-results { position: relative; }
-    .cv-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-    .cv-card {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 24px; padding: 2.5rem;
-      transition: all .4s;
-      position: relative; overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,.04);
-    }
-    .cv-card:hover { transform: translateY(-6px); border-color: rgba(0,102,221,.25); box-shadow: 0 12px 40px rgba(0,0,0,.1); }
-    .cv-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--accent), var(--teal));
-    }
-    .cv-icon { font-size: 2.2rem; margin-bottom: 1rem; }
-    .cv-card h3 { font-size: 1.15rem; color: var(--white); margin-bottom: 1rem; }
-    .cv-card p { font-size: .875rem; color: var(--muted); line-height: 1.6; }
-    .cv-highlight {
-      background: linear-gradient(135deg, rgba(0,102,221,.04), rgba(0,168,133,.03));
-      border: 1px solid rgba(0,102,221,.15);
-      border-radius: 24px; padding: 2.5rem;
-      text-align: center; margin-top: 2rem;
-    }
-    .cv-highlight h3 { font-size: 1.3rem; color: var(--white); margin-bottom: .8rem; }
-    .cv-highlight p { color: var(--muted); font-size: .95rem; max-width: 600px; margin: 0 auto; }
-
-    /* ─── Stat Blocks ──────────────────────────────────────────── */
-    .cv-stats { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1.2rem; }
-    .cv-stat {
-      display: inline-flex; align-items: baseline; gap: 6px;
-      background: rgba(0,102,221,.06); border: 1px solid rgba(0,102,221,.14);
-      border-radius: 12px; padding: 8px 16px;
-    }
-    .cv-stat-num {
-      font-size: 1.9rem; font-weight: 800; color: var(--accent);
-      line-height: 1.1; letter-spacing: -.02em;
-    }
-    .cv-stat-label {
-      font-size: .72rem; font-weight: 600; color: var(--muted);
-      text-transform: uppercase; letter-spacing: .06em;
-    }
-    .cv-stat--teal { background: rgba(0,168,133,.06); border-color: rgba(0,168,133,.14); }
-    .cv-stat--teal .cv-stat-num { color: var(--teal); }
-    .cv-stat--large .cv-stat-num { font-size: 2.4rem; }
-    .cv-hero-stat {
-      display: flex; align-items: baseline; gap: 8px;
-      margin-bottom: .5rem;
-    }
-    .cv-hero-num {
-      font-size: 2.8rem; font-weight: 900; line-height: 1;
-      background: linear-gradient(135deg, var(--accent), var(--teal));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text; letter-spacing: -.03em;
-    }
-    .cv-hero-suffix {
-      font-size: .85rem; font-weight: 600; color: var(--muted);
-      text-transform: uppercase; letter-spacing: .06em;
-    }
-    .cv-sub-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: .5rem; margin-bottom: 1rem; }
-    .cv-sub-stat {
-      background: #f5f7fa; border-radius: 10px; padding: 8px 12px;
-      display: flex; align-items: baseline; gap: 6px;
-    }
-    .cv-sub-num { font-size: 1.05rem; font-weight: 800; color: var(--accent); }
-    .cv-sub-label { font-size: .7rem; color: var(--muted); }
-
-    /* ─── System Architecture ───────────────────────────────────── */
-    #system-arch { position: relative; }
-    .arch-pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; position: relative; }
-    .arch-step {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 24px; padding: 2rem 1.5rem;
-      backdrop-filter: blur(20px); text-align: center;
-      transition: all .4s; position: relative;
-    }
-    .arch-step:hover { transform: translateY(-6px); border-color: rgba(0,194,255,.3); box-shadow: var(--shadow); }
-    .arch-step-num {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--cyan));
-      display: flex; align-items: center; justify-content: center;
-      font-size: .85rem; font-weight: 800; color: var(--white);
-      margin: 0 auto 1rem;
-    }
-    .arch-step-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-    .arch-step h3 { font-size: 1.05rem; color: var(--white); margin-bottom: .6rem; }
-    .arch-step p { font-size: .85rem; color: var(--muted); }
-    .arch-connector {
-      display: none; position: absolute; top: 50%; height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--cyan));
-    }
-    @media (min-width: 1025px) {
-      .arch-connector { display: block; width: calc(25% - 3rem); }
-      .arch-connector:nth-child(2) { left: calc(25% + .75rem); }
-      .arch-connector:nth-child(4) { left: calc(50% + .75rem); }
-      .arch-connector:nth-child(6) { left: calc(75% + .75rem); }
-    }
-
-    /* ─── AFT / FFT ─────────────────────────────────────────────── */
-    #aft { position: relative; }
-    #fft { position: relative; }
-    .training-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-    .training-content h2 { margin-bottom: 1.5rem; }
-    .training-content > p { color: var(--muted); margin-bottom: 1.5rem; font-size: 1rem; }
-    .training-list { list-style: none; display: flex; flex-direction: column; gap: .8rem; }
-    .training-list li {
-      display: flex; align-items: flex-start; gap: 12px;
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 14px; padding: 1rem 1.2rem;
-      font-size: .9rem; color: var(--muted); transition: all .3s;
-      box-shadow: 0 2px 8px rgba(0,0,0,.03);
-    }
-    .training-list li:hover { border-color: rgba(0,102,221,.2); background: rgba(0,102,221,.02); }
-    .training-list li .li-icon { font-size: 1.2rem; flex-shrink: 0; }
-    .training-visual {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 28px; padding: 2.5rem;
-      position: relative; overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,.06);
-    }
-    .training-visual::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), var(--teal), transparent);
-    }
-    .diff-scale { display: flex; flex-direction: column; gap: 1rem; }
-    .diff-row {
-      display: flex; align-items: center; gap: 1rem;
-    }
-    .diff-label { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; min-width: 80px; }
-    .diff-bar { flex: 1; height: 12px; border-radius: 6px; background: rgba(0,0,0,.05); overflow: hidden; }
-    .diff-fill { height: 100%; border-radius: 6px; transition: width 1s ease; }
-    .diff-fill.easy { background: linear-gradient(90deg, var(--teal), #6bcb77); width: 35%; }
-    .diff-fill.medium { background: linear-gradient(90deg, var(--cyan), var(--accent)); width: 60%; }
-    .diff-fill.hard { background: linear-gradient(90deg, var(--accent), #7700bb); width: 85%; }
-    .diff-desc { font-size: .8rem; color: var(--muted); margin-top: 1.5rem; text-align: center; }
-    .diff-arrows { display: flex; justify-content: center; gap: 1rem; margin: 1rem 0; }
-    .diff-arrow {
-      display: flex; align-items: center; gap: .5rem;
-      font-size: .75rem; font-weight: 600; color: var(--cyan);
-    }
-    .fft-participants {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
-    }
-    .fft-role {
-      text-align: center; padding: 1.5rem 1rem;
-    }
-    .fft-role-icon { font-size: 2.5rem; margin-bottom: .8rem; }
-    .fft-role h4 { font-size: .9rem; color: var(--white); margin-bottom: .3rem; }
-    .fft-role p { font-size: .75rem; color: var(--muted); }
-    .fft-connector {
-      display: flex; justify-content: center; align-items: center; gap: .5rem;
-      padding: 1rem 0;
-      color: var(--cyan); font-size: .8rem; font-weight: 600;
-    }
-
-    /* ─── Data Dashboard ────────────────────────────────────────── */
-    #data-rehab { position: relative; }
-    .dashboard-mock {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 28px; padding: 2rem;
-      position: relative; overflow: hidden;
-      max-width: 900px; margin: 0 auto;
-      box-shadow: 0 4px 20px rgba(0,0,0,.06);
-    }
-    .dashboard-mock::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), var(--teal), transparent);
-    }
-    .dash-bar {
-      background: #f5f6f8; padding: 10px 16px;
-      display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--border); margin: -2rem -2rem 1.5rem;
-      padding: 12px 2rem; border-radius: 28px 28px 0 0;
-    }
-    .dash-bar-title { font-size: .85rem; font-weight: 700; color: var(--white); }
-    .dash-bar-status { font-size: .7rem; color: var(--teal); display: flex; align-items: center; gap: 6px; }
-    .dash-bar-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
-    .dash-metrics-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
-    .dash-metric {
-      background: #f8f9fc; border: 1px solid var(--border);
-      border-radius: 14px; padding: 1rem; text-align: center;
-    }
-    .dash-metric .dm-icon { font-size: 1.4rem; margin-bottom: .4rem; }
-    .dash-metric .dm-value { font-size: 1.3rem; font-weight: 800; color: var(--white); }
-    .dash-metric .dm-label { font-size: .65rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-top: .2rem; }
-    .dash-charts { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
-    .dash-chart {
-      background: #f8f9fc; border: 1px solid var(--border);
-      border-radius: 16px; padding: 1.2rem;
-    }
-    .dash-chart-title { font-size: .75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 1rem; }
-    .chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 120px; }
-    .chart-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .chart-bar-fill {
-      width: 100%; border-radius: 4px 4px 0 0;
-      background: linear-gradient(var(--accent), var(--cyan));
-      animation: chartGrow 2s ease both;
-    }
-    @keyframes chartGrow { from { height: 0; } }
-    .chart-bar-lbl { font-size: .6rem; color: var(--muted); }
-    .chart-ring { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
-    .ring-indicator {
-      width: 100px; height: 100px; border-radius: 50%;
-      border: 6px solid rgba(0,0,0,.06);
-      position: relative; display: flex; align-items: center; justify-content: center;
-    }
-    .ring-indicator::after {
-      content: ''; position: absolute; inset: 0; border-radius: 50%;
-      border: 6px solid transparent; border-top-color: var(--teal); border-right-color: var(--teal);
-      transform: rotate(45deg);
-    }
-    .ring-val { font-size: 1.4rem; font-weight: 800; color: var(--white); }
-    .ring-lbl { font-size: .7rem; color: var(--muted); margin-top: .5rem; }
-
-    /* ─── Clinical Integration ──────────────────────────────────── */
-    #clinical-int { position: relative; }
-    .clinic-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-    .clinic-card {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 24px; padding: 2rem;
-      transition: all .4s; box-shadow: 0 2px 12px rgba(0,0,0,.04);
-    }
-    .clinic-card:hover { transform: translateY(-6px); border-color: rgba(0,102,221,.25); box-shadow: 0 12px 40px rgba(0,0,0,.1); }
-    .clinic-icon { font-size: 2rem; margin-bottom: 1rem; }
-    .clinic-card h3 { font-size: 1.1rem; color: var(--white); margin-bottom: .6rem; }
-    .clinic-card p { font-size: .875rem; color: var(--muted); margin-bottom: 1rem; }
-    .clinic-params { list-style: none; }
-    .clinic-params li {
-      font-size: .8rem; color: var(--muted); padding: 5px 0;
-      display: flex; align-items: center; gap: 8px;
-      border-bottom: 1px solid rgba(0,0,0,.04);
-    }
-    .clinic-params li:last-child { border-bottom: none; }
-    .clinic-params li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; }
-
-    /* ─── Clinical Partnerships ─────────────────────────────────── */
-    #clinical-partners { position: relative; }
-    .partners-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; max-width: 800px; margin: 0 auto; }
-    .partner-card {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 24px; padding: 2.5rem;
-      text-align: center;
-      transition: all .4s; position: relative; overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,.04);
-    }
-    .partner-card:hover { transform: translateY(-6px); border-color: rgba(0,102,221,.25); box-shadow: 0 12px 40px rgba(0,0,0,.1); }
-    .partner-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--teal));
-    }
-    .partner-card-icon { font-size: 3rem; margin-bottom: 1rem; }
-    .partner-card-logo {
-      width: 160px; height: 160px; object-fit: contain;
-      margin: 0 auto 1.2rem; border-radius: 16px;
-      background: #f5f6f8; padding: 14px;
-      border: 1px solid rgba(0,0,0,.06);
-    }
-    .partner-card-logo.logo-md {
-      padding: 22px;
-    }
-    .partner-card h3 { font-size: 1.1rem; color: var(--white); margin-bottom: .4rem; }
-    .partner-card .partner-dept { font-size: .8rem; color: var(--accent); font-weight: 600; margin-bottom: .8rem; }
-    .partner-card p { font-size: .85rem; color: var(--muted); }
-    .partner-card--featured { padding: 3rem 3rem 2rem; text-align: left; }
-    .partner-card--featured::before { height: 3px; }
-    .featured-header {
-      display: flex; align-items: center; gap: 2.5rem;
-      margin-bottom: 2rem;
-    }
-    .featured-header .partner-card-logo { flex-shrink: 0; }
-    .featured-header-text { flex: 1; }
-    .featured-header-text h3 { text-align: left; }
-    .featured-header-text .partner-dept { text-align: left; }
-    .featured-header-text p { text-align: left; margin: 0; }
-    @media (max-width: 640px) {
-      .featured-header { flex-direction: column; text-align: center; }
-      .featured-header-text h3, .featured-header-text .partner-dept, .featured-header-text p { text-align: center; }
-    }
-    .partner-depts-list {
-      display: grid; grid-template-columns: 1fr; gap: 1.2rem;
-      text-align: left;
-    }
-    .partner-dept-card {
-      background: #f8f9fc; border: 1px solid var(--border);
-      border-radius: 20px; padding: 2rem 2.2rem;
-      transition: all .3s; position: relative;
-      border-left: 4px solid var(--accent);
-    }
-    .partner-dept-card:nth-child(2) { border-left-color: var(--teal); }
-    .partner-dept-card:nth-child(3) { border-left-color: #7700bb; }
-    .partner-dept-card:hover { background: #ffffff; box-shadow: 0 6px 24px rgba(0,0,0,.07); transform: translateX(6px); }
-    .partner-dept-card-icon { font-size: 2.4rem; margin-bottom: .8rem; }
-    .partner-dept-card h4 { font-size: 1.15rem; color: var(--white); margin-bottom: .6rem; font-weight: 700; }
-    .partner-dept-card p { font-size: .9rem; color: var(--muted); line-height: 1.65; margin: 0; }
-
-    /* ─── Why Hospitals ─────────────────────────────────────────── */
-    #why-hospitals { position: relative; }
-    .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-    .why-card {
-      background: #ffffff; border: 1px solid var(--border);
-      border-radius: 28px; padding: 2.5rem;
-      transition: all .4s;
-      position: relative; overflow: hidden;
-      box-shadow: 0 2px 12px rgba(0,0,0,.04);
-    }
-    .why-card:hover { transform: translateY(-8px); border-color: rgba(0,102,221,.25); box-shadow: 0 12px 40px rgba(0,0,0,.1); }
-    .why-card::before {
-      content: ''; position: absolute; inset: 0; border-radius: 28px;
-      background: linear-gradient(135deg, transparent 0%, rgba(0,102,221,.02) 100%);
-      opacity: 0; transition: opacity .4s;
-    }
-    .why-card:hover::before { opacity: 1; }
-    .why-icon {
-      width: 64px; height: 64px; border-radius: 18px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.8rem; margin-bottom: 1.5rem;
-      background: rgba(0,102,221,.08);
-    }
-    .why-card:nth-child(2) .why-icon { background: rgba(0,168,133,.08); }
-    .why-card:nth-child(3) .why-icon { background: rgba(140,0,220,.06); }
-    .why-card:nth-child(4) .why-icon { background: rgba(220,80,0,.06); }
-    .why-card h3 { font-size: 1.3rem; color: var(--white); margin-bottom: .8rem; }
-    .why-card p { font-size: .925rem; color: var(--muted); }
-
-    /* ─── Scroll Reveal ──────────────────────────────────────────── */
-    .reveal { opacity: 0; transform: translateY(40px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ─── Responsive ──────────────────────────────────────────────── */
-    @media (max-width: 1024px) {
-      .hero-grid, .what-grid, .contact-grid, .training-grid { grid-template-columns: 1fr; }
-      .modes-grid, .cv-grid, .clinic-grid, .why-grid { grid-template-columns: 1fr; }
-      .awards-grid { grid-template-columns: repeat(2, 1fr); }
-      .collab-tracks { grid-template-columns: 1fr; }
-      .arch-pipeline { grid-template-columns: repeat(2, 1fr); }
-      .footer-grid { grid-template-columns: 1fr 1fr; }
-      .nav-links { display: none; }
-      .demo-panel.active { grid-template-columns: 1fr; }
-      .dash-metrics-row { grid-template-columns: repeat(3, 1fr); }
-      .dash-charts { grid-template-columns: 1fr; }
-      .partners-grid, .partners-grid[style] { grid-template-columns: 1fr !important; max-width: 500px !important; }
-    }
-    @media (max-width: 640px) {
-      .awards-grid { grid-template-columns: 1fr; }
-      .impact-grid { grid-template-columns: 1fr; }
-      .demo-metrics { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
-      .arch-pipeline { grid-template-columns: 1fr; }
-      .dash-metrics-row { grid-template-columns: repeat(2, 1fr); }
-      .fft-participants { grid-template-columns: 1fr; }
-      .cv-hero-num { font-size: 2.2rem; }
-      .cv-stat-num { font-size: 1.5rem; }
-      .cv-stat--large .cv-stat-num { font-size: 1.8rem; }
-      .cv-sub-stats { grid-template-columns: 1fr; }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>(function(){try{if(localStorage.getItem('nf-lang')==='th'){var d=document.documentElement;d.lang='th';d.className+=(' nf-cloak');setTimeout(function(){d.classList.remove('nf-cloak');},1500);}}catch(e){}})();</script>
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "NeuronFRAMES",
+    "url": "https://neuronframes.com/",
+    "logo": "https://neuronframes.com/nfl1.png",
+    "description": "AI-assisted rehabilitation platform combining computer-vision pose detection, gamified therapy, sensor-based exercises, and speech tools, in clinical use at King Chulalongkorn Memorial Hospital.",
+    "email": "admin@neuronframes.com"
+  }
+  </script>
 </head>
 <body>
 
-<!-- Ambient Orbs -->
-<div class="orb-container">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+<a class="skip-to-content" href="#main">Skip to content</a>
+
+<!-- ═══════════════════════ SVG ICON SPRITE ════════════════════════
+     Reusable line-icons replacing emoji. Stroke uses currentColor so
+     parent .cv-icon / .why-icon / etc. control the tint. -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <symbol id="i-stethoscope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 3v6a4 4 0 0 0 8 0V3"/>
+      <path d="M6 3h2M12 3h2"/>
+      <path d="M10 13v3a4 4 0 0 0 4 4 4 4 0 0 0 4-4v-1"/>
+      <circle cx="18" cy="11" r="2"/>
+    </symbol>
+    <symbol id="i-home-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 11l9-8 9 8"/>
+      <path d="M5 9v11h14V9"/>
+      <path d="M12 16.5l-2.5-2.4a1.7 1.7 0 0 1 2.5-2.2 1.7 1.7 0 0 1 2.5 2.2L12 16.5z"/>
+    </symbol>
+    <symbol id="i-hospital" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 21V8h16v13"/>
+      <path d="M3 21h18"/>
+      <path d="M12 4v4"/>
+      <path d="M10 6h4"/>
+      <path d="M12 13v4M10 15h4"/>
+      <path d="M8 21v-4M16 21v-4"/>
+    </symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+      <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+      <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+    </symbol>
+    <symbol id="i-trending" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 17l6-6 4 4 8-8"/>
+      <path d="M14 7h7v7"/>
+    </symbol>
+    <symbol id="i-microscope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 21h12"/>
+      <path d="M8 21v-3h8v3"/>
+      <path d="M12 18v-4"/>
+      <path d="M9 14h6"/>
+      <circle cx="14.5" cy="7.5" r="3.5"/>
+      <path d="M13 4l3-1.5 1.5 3"/>
+    </symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/>
+      <path d="M8 6H5v2a3 3 0 0 0 3 3"/>
+      <path d="M16 6h3v2a3 3 0 0 1-3 3"/>
+      <path d="M10 13.5h4v3.5h-4z"/>
+      <path d="M7 21h10"/>
+      <path d="M9 17h6"/>
+    </symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="5" width="18" height="14" rx="2"/>
+      <path d="M3 7l9 6 9-6"/>
+    </symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 5a2.5 2.5 0 0 0-4.9-.7A2.5 2.5 0 0 0 4 7a2.5 2.5 0 0 0-1 4.4A2.5 2.5 0 0 0 4 16a2.5 2.5 0 0 0 3.1 2.7A2.5 2.5 0 0 0 12 19V5z"/>
+      <path d="M12 5a2.5 2.5 0 0 1 4.9-.7A2.5 2.5 0 0 1 20 7a2.5 2.5 0 0 1 1 4.4A2.5 2.5 0 0 1 20 16a2.5 2.5 0 0 1-3.1 2.7A2.5 2.5 0 0 1 12 19"/>
+    </symbol>
+    <symbol id="i-trending-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 7l6 6 4-4 8 8"/>
+      <path d="M14 17h7v-7"/>
+    </symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M3 12h18"/>
+      <path d="M12 3a14 14 0 0 1 4 9 14 14 0 0 1-4 9 14 14 0 0 1-4-9 14 14 0 0 1 4-9z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Scroll progress -->
+<div id="scroll-progress"></div>
+
+<!-- Ambient background -->
+<div class="bg-ambient" aria-hidden="true">
+  <div class="bg-blob b1"></div>
+  <div class="bg-blob b2"></div>
+  <div class="bg-blob b3"></div>
 </div>
+<div class="bg-grid" aria-hidden="true"></div>
 
 <!-- ═══════════════════════════════ NAVBAR ═══════════════════════════════ -->
 <nav id="navbar">
   <div class="container nav-inner">
-    <a href="#hero" class="logo">
+    <a href="index.html" class="logo">
       <img src="nfl1.png" alt="NeuronFRAMES" class="logo-img" />
     </a>
-    <div class="nav-links">
-      <a href="#what-is">About</a>
-      <a href="#clinical-int">For Clinicians</a>
-      <a href="#modes">Therapy Modes</a>
-      <a href="#milestones">Research</a>
-      <a href="#why-hospitals">Why NeuronFRAMES</a>
-      <a href="#contact">Contact</a>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="platform.html">Platform</a>
+      <a href="impact.html">Impact</a>
+      <a href="partnership.html">Partnership</a>
+      <a href="research.html">Research</a>
+      <a href="awards.html">Awards</a>
+      <a href="system.html" class="nav-interactive">Interactive Journey</a>
+      <a href="contact.html">Contact</a>
     </div>
-    <a href="#contact" class="btn btn-primary nav-cta">Get Involved</a>
+    <div class="nav-actions">
+      <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch language" data-no-translate>
+        <svg class="lang-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 4 9 14 14 0 0 1-4 9 14 14 0 0 1-4-9 14 14 0 0 1 4-9z"/></svg><span class="lang-label">ไทย</span>
+      </button>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get Involved</a>
+      <button id="nav-toggle" class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
 </nav>
+<div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
 
-<!-- ═══════════════════════════════ HERO ═════════════════════════════════ -->
 <section id="hero">
   <div class="container">
     <div class="hero-grid">
       <div class="hero-content">
         <div class="hero-badge">
           <span></span>
-          Research &amp; Innovation Project
+          Live in clinical use · King Chulalongkorn Memorial Hospital
         </div>
         <h1 class="hero-title">
-          Making Rehab<br>
-          Accessible Through<br>
-          <span class="gradient-text">Interactive Technology</span>
+          Transforming <span class="gradient-text">Rehabilitation<br>Across Thailand</span>, and Beyond
         </h1>
+        <p class="hero-hook">
+          What if good rehabilitation didn't mean three hospital trips a week?
+          <strong>It already doesn't</strong>, for 250+ patients a month.
+        </p>
         <p class="hero-sub">
-          NeuronFRAMES is an AI-assisted rehabilitation platform that combines
-          computer vision, sensor-based input, and gamified therapy to make
-          recovery more accessible, engaging, and measurable.
+          NeuronFRAMES is an AI-assisted rehabilitation platform, computer vision,
+          gamified therapy, sensor-based exercises, and speech tools, in clinical use at
+          King Chulalongkorn Memorial Hospital across <strong>Physical, Occupational &amp; Speech Therapy</strong>,
+          delivering measurable outcomes in the clinic and at home.
         </p>
         <div class="hero-actions">
-          <a href="#what-is" class="btn btn-primary">
-            Learn More
+          <a href="impact.html" class="btn btn-primary">
+            See the Results
           </a>
-          <a href="#contact" class="btn btn-outline">
-            Get In Touch
+          <a href="contact.html" class="btn btn-outline">
+            Partner With Us
           </a>
         </div>
         <div class="hero-stats">
           <div class="stat">
-            <div class="stat-num">4<span></span></div>
-            <div class="stat-label">Therapy Modes</div>
+            <div class="stat-num"><span class="count-up" data-count="250" data-decimals="0">0</span><span>+</span></div>
+            <div class="stat-label">Patients / Month at Chula</div>
           </div>
           <div class="stat">
-            <div class="stat-num">Web<span>-Based</span></div>
-            <div class="stat-label">Platform</div>
+            <div class="stat-num"><span class="count-up" data-count="3" data-decimals="0">0</span></div>
+            <div class="stat-label">Disciplines · PT · OT · Speech</div>
           </div>
           <div class="stat">
-            <div class="stat-num">Open<span></span></div>
-            <div class="stat-label">Research Project</div>
+            <div class="stat-num"><span class="count-up" data-count="23" data-decimals="0">0</span><span>%</span><span class="stat-note">†</span></div>
+            <div class="stat-label">Avg Improvement</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num"><span class="count-up" data-count="47" data-decimals="0">0</span><span>%</span><span class="stat-note">†</span></div>
+            <div class="stat-label">Lower Therapy Cost</div>
           </div>
         </div>
+        <p class="hero-stats-fn">† Improvement and cost figures are from pilot trials and field deployments. <a href="impact.html#pilot-results">See the evidence</a>.</p>
       </div>
       <div class="hero-visual">
-        <div class="hero-card">
-          <div class="brain-visual">
-            <div class="brain-ring ring-1"></div>
-            <div class="brain-ring ring-2"></div>
-            <div class="brain-ring ring-3"></div>
-            <div class="brain-core"><img src="nfl1.png" alt="NeuronFRAMES" style="width:90%;height:90%;object-fit:contain;border-radius:50%"></div>
-            <div class="neural-dot" style="top:20%;left:15%;animation-delay:.3s"></div>
-            <div class="neural-dot" style="top:70%;left:20%;animation-delay:.7s"></div>
-            <div class="neural-dot" style="top:25%;right:18%;animation-delay:1.1s"></div>
-            <div class="neural-dot" style="bottom:20%;right:15%;animation-delay:.5s"></div>
+        <div class="hero-card hero-card--mockup">
+          <div class="mockup-bar">
+            <span class="mb-dot"></span>
+            <span class="mb-dot"></span>
+            <span class="mb-dot"></span>
+            <span class="mb-title">PT Session</span>
+            <span class="mb-live"><span class="mb-blink"></span>Live</span>
+          </div>
+          <div class="mockup-body">
+            <div class="mockup-pose" aria-hidden="true">
+              <svg class="pose-svg" viewBox="0 0 180 240" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                  <pattern id="pose-grid" width="18" height="18" patternUnits="userSpaceOnUse">
+                    <path d="M 18 0 L 0 0 0 18" fill="none" stroke="rgba(10,95,255,.06)" stroke-width="1"/>
+                  </pattern>
+                  <radialGradient id="pose-glow" cx="50%" cy="40%" r="60%">
+                    <stop offset="0%" stop-color="rgba(10,95,255,.10)"/>
+                    <stop offset="100%" stop-color="transparent"/>
+                  </radialGradient>
+                </defs>
+                <rect width="180" height="240" fill="url(#pose-grid)"/>
+                <rect width="180" height="240" fill="url(#pose-glow)"/>
+
+                <!-- Angle arc on raised arm -->
+                <path class="pose-arc" d="M 118 70 A 22 22 0 0 1 138 92" fill="none" stroke="#00b389" stroke-width="1.4" stroke-dasharray="2 3" stroke-linecap="round"/>
+                <text class="pose-angle" x="142" y="86" fill="#00875a" font-size="9" font-weight="700">42°</text>
+
+                <!-- Skeleton -->
+                <g class="pose-skel" fill="none" stroke="#0a5fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="90" y1="56" x2="90" y2="128"/>
+                  <line x1="68" y1="68" x2="112" y2="68"/>
+                  <line x1="68" y1="68" x2="56" y2="108"/>
+                  <line x1="56" y1="108" x2="52" y2="148"/>
+                  <line x1="112" y1="68" x2="128" y2="100"/>
+                  <line x1="128" y1="100" x2="140" y2="78"/>
+                  <line x1="72" y1="128" x2="108" y2="128"/>
+                  <line x1="72" y1="128" x2="68" y2="184"/>
+                  <line x1="68" y1="184" x2="62" y2="226"/>
+                  <line x1="108" y1="128" x2="114" y2="184"/>
+                  <line x1="114" y1="184" x2="120" y2="226"/>
+                </g>
+
+                <!-- Head -->
+                <circle class="pose-head" cx="90" cy="42" r="14" fill="rgba(10,95,255,.06)" stroke="#0a5fff" stroke-width="2"/>
+
+                <!-- Landmark dots -->
+                <g class="pose-pts">
+                  <circle cx="90" cy="42" r="3.2"/>
+                  <circle cx="68" cy="68" r="3.2"/>
+                  <circle cx="112" cy="68" r="3.2"/>
+                  <circle cx="56" cy="108" r="3.2"/>
+                  <circle cx="128" cy="100" r="3.2" class="hot"/>
+                  <circle cx="52" cy="148" r="3.2"/>
+                  <circle cx="140" cy="78" r="3.2" class="hot"/>
+                  <circle cx="72" cy="128" r="3.2"/>
+                  <circle cx="108" cy="128" r="3.2"/>
+                  <circle cx="68" cy="184" r="3.2"/>
+                  <circle cx="114" cy="184" r="3.2"/>
+                  <circle cx="62" cy="226" r="3.2"/>
+                  <circle cx="120" cy="226" r="3.2"/>
+                </g>
+
+                <!-- Scan sweep line -->
+                <line class="pose-scan" x1="0" y1="0" x2="180" y2="0" stroke="rgba(0,179,137,.55)" stroke-width="1.5"/>
+              </svg>
+              <span class="pose-tag"><span class="pt-dot"></span>Tracking 13 points</span>
+            </div>
+
+            <div class="mockup-side">
+              <div class="mockup-chart">
+                <div class="mc-head">
+                  <span class="mc-title">Range of Motion</span>
+                  <span class="mc-trend">↑ 18%</span>
+                </div>
+                <svg class="chart-svg" viewBox="0 0 160 60" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="chart-fill" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0%" stop-color="#0a5fff" stop-opacity=".35"/>
+                      <stop offset="100%" stop-color="#0a5fff" stop-opacity="0"/>
+                    </linearGradient>
+                  </defs>
+                  <path class="chart-area" d="M 0 48 L 16 44 L 32 38 L 48 32 L 64 28 L 80 26 L 96 22 L 112 18 L 128 14 L 144 10 L 160 6 L 160 60 L 0 60 Z" fill="url(#chart-fill)"/>
+                  <path class="chart-line" d="M 0 48 L 16 44 L 32 38 L 48 32 L 64 28 L 80 26 L 96 22 L 112 18 L 128 14 L 144 10 L 160 6" stroke="#0a5fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle class="chart-dot" cx="160" cy="6" r="3.2" fill="#0a5fff"/>
+                </svg>
+              </div>
+              <div class="mockup-metrics">
+                <div class="mm"><span class="mm-num">12</span><span class="mm-lbl">Reps</span></div>
+                <div class="mm mm--teal"><span class="mm-num">94<small>%</small></span><span class="mm-lbl">Form</span></div>
+                <div class="mm"><span class="mm-num">42°</span><span class="mm-lbl">Range</span></div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="floating-badge fb-top">
-          <div class="dot" style="background:#6bcb77"></div>
-          Real-time Tracking
+          <div class="dot" style="background:var(--teal)"></div>
+          Pose Tracking · Live
         </div>
         <div class="floating-badge fb-bot">
-          <div class="dot" style="background:var(--cyan)"></div>
-          Pose Detection
+          <div class="dot" style="background:var(--accent)"></div>
+          Adaptive Difficulty
         </div>
         <div class="floating-badge fb-mid" style="font-size:.75rem">
           <div class="dot" style="background:#ffd93d"></div>
@@ -1082,731 +314,355 @@
       </div>
     </div>
   </div>
+  <a href="#hook" class="hero-scroll" aria-label="Scroll down">
+    <span>Why it matters</span>
+    <span class="hs-mouse"></span>
+  </a>
 </section>
+
+<!-- ════════════════════════ MARQUEE TICKER (HOOK) ══════════════════════ -->
+<div id="hook" class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-hospital"/></svg> <span class="m-em">250+</span> patients / month at King Chulalongkorn Memorial Hospital</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-brain"/></svg> Used in <span class="m-em">Physical · Occupational · Speech</span> therapy, in &amp; outpatient</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-trending-down"/></svg> <span class="m-em">~47%</span> lower therapy cost per patient</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-trophy"/></svg> ACM/IEEE <span class="m-em">HRI 2025</span> · People's Choice Award</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-microscope"/></svg> <span class="m-em">10+</span> research projects underway</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-globe"/></svg> Runs in a browser: just a webcam, no special hardware</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-stethoscope"/></svg> Less workload for staff <span class="m-em">·</span> fewer hospital trips for patients</span>
+    <span class="marquee-sep"></span>
+    <!-- duplicate set for seamless loop -->
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-hospital"/></svg> <span class="m-em">250+</span> patients / month at King Chulalongkorn Memorial Hospital</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-brain"/></svg> Used in <span class="m-em">Physical · Occupational · Speech</span> therapy, in &amp; outpatient</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-trending-down"/></svg> <span class="m-em">~47%</span> lower therapy cost per patient</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-trophy"/></svg> ACM/IEEE <span class="m-em">HRI 2025</span> · People's Choice Award</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-microscope"/></svg> <span class="m-em">10+</span> research projects underway</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-globe"/></svg> Runs in a browser: just a webcam, no special hardware</span>
+    <span class="marquee-sep"></span>
+    <span class="marquee-item"><svg class="m-ico" aria-hidden="true"><use href="#i-stethoscope"/></svg> Less workload for staff <span class="m-em">·</span> fewer hospital trips for patients</span>
+    <span class="marquee-sep"></span>
+  </div>
+</div>
+
+<!-- ═════════════════ TRUST STRIP — Interactive Partner Showcase ═════════════════ -->
+<div class="trust-strip trust-strip--logos reveal" id="partner-showcase">
+  <div class="container trust-inner">
+    <span class="trust-label">Developed in collaboration with</span>
+
+    <div class="logo-wall" role="tablist" aria-label="Partner organizations">
+      <button type="button" class="logo-wall-item active" data-partner="kcmh" role="tab" aria-selected="true" aria-controls="partner-spotlight" title="King Chulalongkorn Memorial Hospital">
+        <img src="cupmr_logo.png" alt="King Chulalongkorn Memorial Hospital" loading="lazy" />
+      </button>
+      <button type="button" class="logo-wall-item" data-partner="burapha" role="tab" aria-selected="false" aria-controls="partner-spotlight" title="Burapha University Hospital">
+        <img src="burapha_logo.png" alt="Burapha University Hospital" loading="lazy" />
+      </button>
+      <button type="button" class="logo-wall-item" data-partner="bangkok" role="tab" aria-selected="false" aria-controls="partner-spotlight" title="Bangkok International Hospital">
+        <img src="bangkokhospital_logo.png" alt="Bangkok International Hospital" loading="lazy" />
+      </button>
+      <button type="button" class="logo-wall-item" data-partner="uia" role="tab" aria-selected="false" aria-controls="partner-spotlight" title="University of Agder">
+        <img src="UiA_logo.png" alt="University of Agder" loading="lazy" />
+      </button>
+      <button type="button" class="logo-wall-item" data-partner="chula-eng" role="tab" aria-selected="false" aria-controls="partner-spotlight" title="Chulalongkorn University Faculty of Engineering">
+        <img src="cueng_logo.png" alt="Chulalongkorn University Faculty of Engineering" loading="lazy" />
+      </button>
+    </div>
+
+    <!-- Spotlight panel — content swapped by JS based on active logo -->
+    <div class="partner-spotlight" id="partner-spotlight" role="tabpanel" aria-live="polite">
+      <div class="ps-card">
+        <span class="ps-tag">Hospital · Clinical Lead</span>
+        <h3 class="ps-name">King Chulalongkorn Memorial Hospital</h3>
+        <p class="ps-desc">Department of Physical Medicine and Rehabilitation: 250+ patients per month across Physical, Occupational, and Speech Therapy.</p>
+        <a class="ps-link" href="partnership.html#clinical-partners">View partnership →</a>
+      </div>
+      <div class="ps-progress" aria-hidden="true"><span></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Partner data (read by main.js) -->
+<script id="partner-data" type="application/json">
+{
+  "kcmh":     { "tag": "Hospital · Clinical Lead",      "name": "King Chulalongkorn Memorial Hospital",            "desc": "Department of Physical Medicine and Rehabilitation: 250+ patients per month across Physical, Occupational, and Speech Therapy.", "href": "partnership.html#clinical-partners" },
+  "burapha":  { "tag": "Hospital · Rehabilitation",     "name": "Burapha University Hospital",                     "desc": "Rehabilitation Medicine: clinical feedback on therapy exercise design, patient engagement, and system usability.",                "href": "partnership.html#clinical-partners" },
+  "bangkok":  { "tag": "Hospital · Brain × Bone",       "name": "Bangkok International Hospital",                  "desc": "Collaborating on neurological and orthopedic rehabilitation approaches, integrating clinical expertise with technology-assisted therapy.", "href": "partnership.html#clinical-partners" },
+  "uia":      { "tag": "Academic · AI & Robotics",      "name": "University of Agder",                             "desc": "Research collaboration on AI-driven rehabilitation, biomechatronics, and collaborative robotics (Norway).",                          "href": "partnership.html#academic-partners" },
+  "chula-eng":{ "tag": "Academic · Engineering",        "name": "Chulalongkorn University · Faculty of Engineering","desc": "Academic partnership supporting engineering research, system architecture, and technical innovation in rehabilitation technology.",  "href": "partnership.html#academic-partners" }
+}
+</script>
+
+<!-- ═════════════════ TRUST STRIP — Publication / press badges ═════════════════ -->
+<div class="pub-badges reveal" aria-label="Peer-reviewed publications">
+  <div class="container pub-badges-inner">
+    <span class="pub-badges-label">Peer-reviewed research</span>
+    <div class="pub-badges-row">
+      <a class="pub-badge" href="https://ieeexplore.ieee.org/document/10973829/" target="_blank" rel="noopener" title="IEEE Xplore record">
+        <span class="pb-tag">IEEE</span>
+        <span class="pb-text"><strong>ACM/IEEE HRI 2025</strong><span>People's Choice Award</span></span>
+        <span class="pb-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="pub-badge" href="https://dl.acm.org/doi/abs/10.5555/3721488.3721816" target="_blank" rel="noopener" title="ACM Digital Library">
+        <span class="pb-tag">ACM</span>
+        <span class="pb-text"><strong>ACM Digital Library</strong><span>HRI 2025 Proceedings</span></span>
+        <span class="pb-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="pub-badge" href="https://link.springer.com/chapter/10.1007/978-3-032-14929-9_1" target="_blank" rel="noopener" title="Springer book chapter">
+        <span class="pb-tag">Springer</span>
+        <span class="pb-text"><strong>Springer · LNNS</strong><span>BioMRH 2025 book chapter</span></span>
+        <span class="pb-arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+</div>
+
 
 <div class="divider"></div>
 
-<!-- ══════════════════════════ WHAT IS IT ════════════════════════════════ -->
-<section id="what-is" class="section">
+<!-- ═══════════════════════════ WHAT / WHERE ═════════════════════════════ -->
+<section class="section" style="padding:90px 0">
   <div class="container">
-    <div class="what-grid">
-      <div class="what-visual reveal">
-        <div class="what-card-stack">
-          <div class="wc">
-            <div class="wc-icon">📷</div>
-            <h4>Computer Vision Pose Detection</h4>
-            <p>Tracks body landmarks through a standard webcam, enabling movement analysis without specialized equipment.</p>
-          </div>
-          <div class="wc">
-            <div class="wc-icon">🎮</div>
-            <h4>Gamified Therapy Exercises</h4>
-            <p>Interactive browser-based games transform repetitive exercises into engaging activities that increase patient motivation and adherence.</p>
-          </div>
-          <div class="wc">
-            <div class="wc-icon">🔌</div>
-            <h4>Sensor-Based Input Devices</h4>
-            <p>Arduino-powered sensors such as force-sensitive resistors connect physical rehabilitation tools to the digital therapy platform.</p>
-          </div>
-        </div>
+    <div class="cv-highlight reveal" style="text-align:center;padding:3rem 2.5rem">
+      <div class="section-label" style="margin-bottom:1.2rem">In Clinical Use Today</div>
+      <h2 style="margin-bottom:1rem">An AI Rehabilitation Platform: <span class="gradient-text">Treating 250+ Patients a Month</span></h2>
+      <p style="max-width:740px;margin:0 auto 1.6rem">NeuronFRAMES combines computer-vision pose detection, gamified exercises, sensor-based tasks, and speech therapy in one browser-based platform. At King Chulalongkorn Memorial Hospital it's used in <strong>Physical Therapy, Occupational Therapy, and Speech Therapy</strong>, for both <strong>inpatient and outpatient</strong> care, and continues at home.</p>
+      <div class="cv-stats" style="justify-content:center;flex-wrap:wrap">
+        <div class="cv-stat"><span class="cv-stat-num">250+</span><span class="cv-stat-label">patients / month, today</span></div>
+        <div class="cv-stat cv-stat--teal"><span class="cv-stat-num">3</span><span class="cv-stat-label">disciplines · PT · OT · Speech</span></div>
+        <div class="cv-stat"><span class="cv-stat-num">↓47%</span><span class="cv-stat-label">therapy cost per patient</span></div>
+        <div class="cv-stat cv-stat--teal"><span class="cv-stat-num">10+</span><span class="cv-stat-label">research projects underway</span></div>
       </div>
-      <div class="what-content reveal">
-        <div class="section-label">What Is NeuronFRAMES</div>
-        <h2>Accessible Rehabilitation<br><span class="gradient-text">Through Technology</span></h2>
-        <p>
-          NeuronFRAMES is a research and innovation project developing a web-based AI-assisted
-          rehabilitation system. It combines computer vision pose detection, sensor-based input devices,
-          gamified therapy exercises, speech therapy tools, and progress tracking into a single
-          accessible platform.
-        </p>
-        <p>
-          Globally, millions of patients cannot access consistent rehabilitation therapy due to cost,
-          geographic distance, or limited clinical resources. NeuronFRAMES aims to address these
-          challenges by delivering therapy tools through a standard web browser, requiring only
-          a webcam and internet connection.
-        </p>
-        <p>
-          Built with HTML, CSS, JavaScript, and Arduino sensors, the platform is
-          designed to be affordable and deployable in diverse settings — from clinical facilities
-          to patients' homes.
-        </p>
-        <div class="impact-grid">
-          <div class="impact-item">
-            <div class="icon">🌐</div>
-            <div>
-              <h4>Web-Based Access</h4>
-              <p>Runs in any modern browser — no software installation or expensive hardware required.</p>
-            </div>
-          </div>
-          <div class="impact-item">
-            <div class="icon">📊</div>
-            <div>
-              <h4>Progress Tracking</h4>
-              <p>Data-driven session records help clinicians and patients monitor improvement over time.</p>
-            </div>
-          </div>
-          <div class="impact-item">
-            <div class="icon">🎯</div>
-            <div>
-              <h4>Motivation Through Gamification</h4>
-              <p>Game mechanics keep patients engaged and encourage consistent practice between sessions.</p>
-            </div>
-          </div>
-          <div class="impact-item">
-            <div class="icon">💡</div>
-            <div>
-              <h4>Low-Cost Design</h4>
-              <p>Open web technologies and affordable sensors make the system accessible in resource-limited settings.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div style="margin-top:2rem"><a href="impact.html" class="btn btn-primary">See the impact</a></div>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ══════════════════════════ SOCIETAL IMPACT ═══════════════════════════ -->
-<section id="clinical-value" class="section">
+<!-- ═══════════════════════ WHY EVERYONE BENEFITS ════════════════════════ -->
+<section class="section">
   <div class="container">
     <div class="section-header reveal">
-      <div class="section-label">Societal Impact</div>
-      <h2>Improving Lives <span class="gradient-text">for All</span></h2>
-      <p>NeuronFRAMES addresses systemic barriers in rehabilitation access — improving quality of life for patients, reducing burden on healthcare professionals, and bringing therapy to communities that need it most.</p>
+      <div class="section-label">Lives Made Easier</div>
+      <h2>Better for <span class="gradient-text">Staff, Patients &amp; Hospitals</span></h2>
+      <p>It doesn't just track therapy; it lightens the load on everyone involved.</p>
     </div>
     <div class="cv-grid">
       <div class="cv-card reveal">
-        <div class="cv-icon">💪</div>
-        <h3>Better Quality of Life for Patients</h3>
-        <p>Patients recovering from injury, stroke, or neurological disorders regain independence faster through consistent, guided rehabilitation. Accessible therapy tools help restore mobility, speech, and confidence during recovery.</p>
+        <div class="cv-icon"><svg aria-hidden="true"><use href="#i-stethoscope"/></svg></div>
+        <h3>Less workload for clinical staff</h3>
+        <p>Sessions and metrics are logged automatically, far less paperwork. Therapists guide more patients with less repetitive supervision, and decide from objective data instead of memory and notes.</p>
       </div>
       <div class="cv-card reveal">
-        <div class="cv-icon">👨‍⚕️</div>
-        <h3>Better Quality of Life for Clinicians</h3>
-        <p>Doctors and therapists spend less time on repetitive monitoring tasks and manual documentation. Automated data collection and progress tracking free clinicians to focus on diagnosis, treatment planning, and patient interaction.</p>
+        <div class="cv-icon cv-icon--teal"><svg aria-hidden="true"><use href="#i-home-heart"/></svg></div>
+        <h3>Fewer trips, lower cost for patients</h3>
+        <p>Much of the therapy happens at home: fewer hospital visits, less travel time and expense, less time off work for family. Engaging, family-supported therapy means steadier progress, too.</p>
       </div>
       <div class="cv-card reveal">
-        <div class="cv-icon">🌍</div>
-        <h3>Accessible in Rural &amp; Underserved Regions</h3>
-        <p>Millions of patients in remote or resource-limited areas lack access to rehabilitation facilities. NeuronFRAMES delivers therapy through a web browser — bringing rehabilitation to communities where clinics and specialists are unavailable.</p>
-      </div>
-      <div class="cv-card reveal">
-        <div class="cv-icon">🏠</div>
-        <h3>Rehabilitation at Home</h3>
-        <p>Patients can perform prescribed exercises at home instead of traveling to hospitals for every session. Home-based rehabilitation reduces the physical, financial, and time burden on patients and their families.</p>
+        <div class="cv-icon cv-icon--violet"><svg aria-hidden="true"><use href="#i-hospital"/></svg></div>
+        <h3>Less crowded hospitals</h3>
+        <p>Shifting routine practice home means smoother throughput, lower cost per patient (≈47% in pilot data), and the same staff and space serving more people, and reaching beyond the hospital walls.</p>
       </div>
     </div>
-    <div class="cv-highlight reveal">
-      <h3>Motivation Through Gamification &amp; Family Involvement</h3>
-      <p>Gamified therapy exercises and family-supported training create an engaging rehabilitation experience that increases adherence. When therapy feels rewarding and family members participate, patients are far more likely to maintain consistent practice and achieve better long-term outcomes.</p>
+    <div style="text-align:center;margin-top:2.4rem"><a href="impact.html#quality-of-life" class="btn btn-outline">More on quality of life</a></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════ INSIDE A SESSION (mockup) ════════════════════ -->
+<section id="data-rehab" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Inside a Session</div>
+      <h2>Every Movement, <span class="gradient-text">Measured</span></h2>
+      <p>Range, repetitions, form &mdash; captured automatically as the patient moves.</p>
+    </div>
+    <div class="dashboard-mock reveal">
+      <div class="dash-bar">
+        <div class="dash-bar-title">Therapy Dashboard · Live</div>
+        <div class="dash-bar-status">Synced</div>
+      </div>
+      <div class="dash-metrics-row">
+        <div class="dash-metric">
+          <div class="dm-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent)"><circle cx="12" cy="8" r="3"/><path d="M5 21v-1a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v1"/></svg></div>
+          <div class="dm-value">42</div>
+          <div class="dm-label">Active patients</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dm-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--teal)"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+          <div class="dm-value">+18<span style="font-size:.85rem;color:var(--accent)">%</span></div>
+          <div class="dm-label">Avg range</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dm-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:#7b3ff2"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0z"/><path d="M12 7v5l3 2"/></svg></div>
+          <div class="dm-value">12<span style="font-size:.85rem;color:var(--accent)">m</span></div>
+          <div class="dm-label">Avg session</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dm-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:#d97706"><path d="M12 2l2.4 6.9H22l-6 4.4 2.3 7L12 16l-6.3 4.3 2.3-7L2 8.9h7.6z"/></svg></div>
+          <div class="dm-value">94<span style="font-size:.85rem;color:var(--accent)">%</span></div>
+          <div class="dm-label">Avg form</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dm-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--teal)"><path d="M20 7L9 18l-5-5"/></svg></div>
+          <div class="dm-value">87<span style="font-size:.85rem;color:var(--accent)">%</span></div>
+          <div class="dm-label">Adherence</div>
+        </div>
+      </div>
+      <div class="dash-charts">
+        <div class="dash-chart">
+          <div class="dash-chart-title">Range of Motion · last 7 days</div>
+          <div class="chart-bars">
+            <div class="chart-bar-col"><div class="chart-bar-fill" style="height:42%"></div><div class="chart-bar-lbl">Mon</div></div>
+            <div class="chart-bar-col"><div class="chart-bar-fill" style="height:55%"></div><div class="chart-bar-lbl">Tue</div></div>
+            <div class="chart-bar-col"><div class="chart-bar-fill" style="height:48%"></div><div class="chart-bar-lbl">Wed</div></div>
+            <div class="chart-bar-col"><div class="chart-bar-fill" style="height:68%"></div><div class="chart-bar-lbl">Thu</div></div>
+            <div class="chart-bar-col"><div class="chart-bar-fill" style="height:72%"></div><div class="chart-bar-lbl">Fri</div></div>
+            <div class="chart-bar-col"><div class="chart-bar-fill" style="height:80%"></div><div class="chart-bar-lbl">Sat</div></div>
+            <div class="chart-bar-col"><div class="chart-bar-fill" style="height:92%"></div><div class="chart-bar-lbl">Sun</div></div>
+          </div>
+        </div>
+        <div class="dash-chart">
+          <div class="dash-chart-title">Goal completion</div>
+          <div class="chart-ring">
+            <div class="ring-indicator">
+              <div class="ring-val">76<small style="font-size:.7rem;color:var(--accent)">%</small></div>
+            </div>
+            <div class="ring-lbl">of weekly target</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ══════════════════════════ PILOT RESULTS ════════════════════════════ -->
-<section id="pilot-results" class="section">
+<!-- ═══════════════════════════ EXPLORE ══════════════════════════════════ -->
+<section class="section">
   <div class="container">
     <div class="section-header reveal">
-      <div class="section-label">Pilot Results</div>
-      <h2>Real-World <span class="gradient-text">Clinical Outcomes</span></h2>
-      <div class="cv-stats" style="justify-content:center;margin-top:1.5rem">
-        <div class="cv-stat cv-stat--large"><span class="cv-stat-num">2.6B</span><span class="cv-stat-label">people need rehab</span></div>
-        <div class="cv-stat cv-stat--large cv-stat--teal"><span class="cv-stat-num">&gt;50%</span><span class="cv-stat-label">in LMICs go without</span></div>
-      </div>
-      <p>Early pilot data from community deployments and hospital trials demonstrate measurable rehabilitation outcomes using NeuronFRAMES.</p>
+      <div class="section-label">Explore the Site</div>
+      <h2>Everything, at a <span class="gradient-text">Glance</span></h2>
+      <p>The site is split into focused pages: here's what's inside each one.</p>
     </div>
     <div class="cv-grid">
-      <div class="cv-card reveal">
-        <div class="cv-icon">📊</div>
-        <h3>Community Field Trial</h3>
-        <div class="cv-hero-stat">
-          <span class="cv-hero-num">23%</span>
-          <span class="cv-hero-suffix">avg improvement</span>
-        </div>
-        <div class="cv-stats">
-          <div class="cv-stat"><span class="cv-stat-num">96</span><span class="cv-stat-label">participants</span></div>
-          <div class="cv-stat cv-stat--teal"><span class="cv-stat-num">61</span><span class="cv-stat-label">households</span></div>
-        </div>
-        <div class="cv-sub-stats">
-          <div class="cv-sub-stat"><span class="cv-sub-num">+7.91%</span><span class="cv-sub-label">strength</span></div>
-          <div class="cv-sub-stat"><span class="cv-sub-num">+17.62%</span><span class="cv-sub-label">pose accuracy</span></div>
-          <div class="cv-sub-stat"><span class="cv-sub-num">+61.13%</span><span class="cv-sub-label">game perf.</span></div>
-          <div class="cv-sub-stat"><span class="cv-sub-num">+5.29%</span><span class="cv-sub-label">completion speed</span></div>
-        </div>
-        <p>3-month community deployment (May–July 2025) of home-based rehabilitation using NeuronFRAMES.</p>
-      </div>
-      <div class="cv-card reveal">
-        <div class="cv-icon">🏥</div>
-        <h3>Hospital Pilot Case Studies</h3>
-        <div class="cv-hero-stat">
-          <span class="cv-hero-num">24%</span>
-          <span class="cv-hero-suffix">overall improvement</span>
-        </div>
-        <div class="cv-stats">
-          <div class="cv-stat"><span class="cv-stat-num">5</span><span class="cv-stat-label">patients</span></div>
-          <div class="cv-stat cv-stat--teal"><span class="cv-stat-num">6–9</span><span class="cv-stat-label">weeks</span></div>
-        </div>
-        <div class="cv-sub-stats">
-          <div class="cv-sub-stat"><span class="cv-sub-num">+9.86%</span><span class="cv-sub-label">strength</span></div>
-          <div class="cv-sub-stat"><span class="cv-sub-num">+19.48%</span><span class="cv-sub-label">pose accuracy</span></div>
-          <div class="cv-sub-stat"><span class="cv-sub-num">+49.41%</span><span class="cv-sub-label">game perf.</span></div>
-          <div class="cv-sub-stat"><span class="cv-sub-num">+5.53%</span><span class="cv-sub-label">completion speed</span></div>
-        </div>
-        <p>Supervised pilot at Burapha University Hospital. Early results support further clinical investigation.</p>
-      </div>
-      <div class="cv-card reveal">
-        <div class="cv-icon">💰</div>
-        <h3>Economic Impact</h3>
-        <div class="cv-hero-stat">
-          <span class="cv-hero-num">$264</span>
-          <span class="cv-hero-suffix">/month per person avg</span>
-        </div>
-        <div class="cv-stats">
-          <div class="cv-stat"><span class="cv-stat-num">47%</span><span class="cv-stat-label">cost reduction per person</span></div>
-          <div class="cv-stat cv-stat--teal"><span class="cv-stat-num">$320</span><span class="cv-stat-label">/mo max per person</span></div>
-        </div>
-        <p>Home-based therapy reduces hospital visits, transportation expenses, and per-session fees — making sustained rehabilitation financially viable.</p>
-      </div>
-      <div class="cv-card reveal">
-        <div class="cv-icon">🌍</div>
-        <h3>Global Rehabilitation Gap</h3>
-        <div class="cv-hero-stat">
-          <span class="cv-hero-num">2.6B</span>
-          <span class="cv-hero-suffix">people need rehab worldwide</span>
-        </div>
-        <div class="cv-stats">
-          <div class="cv-stat"><span class="cv-stat-num">&gt;50%</span><span class="cv-stat-label">unserved in LMICs</span></div>
-        </div>
-        <p>NeuronFRAMES delivers therapy through a standard web browser — no specialized equipment required. Field trials show measurable outcomes in resource-limited settings.</p>
-      </div>
+      <a href="platform.html" class="cv-card reveal" style="display:block">
+        <div class="cv-icon"><svg aria-hidden="true"><use href="#i-grid"/></svg></div>
+        <h3>Platform &amp; Therapy →</h3>
+        <p>What NeuronFRAMES is, and how it actually works, clinic and home.</p>
+        <ul class="clinic-params" style="margin-top:1rem">
+          <li>4 therapy modes: pose detection, gamified games, Arduino sensors, speech AI</li>
+          <li>A clear 4-step flow: assess → personalize → train → track &amp; report</li>
+          <li>Adaptive difficulty that adjusts to each patient</li>
+          <li>Family-friendly training, all in a standard browser</li>
+        </ul>
+      </a>
+      <a href="impact.html" class="cv-card reveal" style="display:block">
+        <div class="cv-icon cv-icon--teal"><svg aria-hidden="true"><use href="#i-trending"/></svg></div>
+        <h3>Impact &amp; For Clinicians →</h3>
+        <p>The results, the clinical use, and what changes for staff and patients.</p>
+        <ul class="clinic-params" style="margin-top:1rem">
+          <li>250+ patients/month at King Chulalongkorn Memorial Hospital</li>
+          <li>In use across Physical, Occupational &amp; Speech Therapy, in &amp; outpatient</li>
+          <li>~23% avg improvement · ~47% lower cost in pilot data</li>
+          <li>Less workload for staff · fewer hospital trips for patients · ethics &amp; safety</li>
+        </ul>
+      </a>
+      <a href="research.html" class="cv-card reveal" style="display:block">
+        <div class="cv-icon cv-icon--violet"><svg aria-hidden="true"><use href="#i-microscope"/></svg></div>
+        <h3>Research &amp; Progress →</h3>
+        <p>Peer-reviewed work, the roadmap, the team, and answers to common questions.</p>
+        <ul class="clinic-params" style="margin-top:1rem">
+          <li>Presented at ACM/IEEE HRI 2025, People's Choice Award</li>
+          <li>Indexed on IEEE Xplore · book chapter with Springer (Q4)</li>
+          <li>10+ research projects underway</li>
+          <li>Roadmap: prototype → clinical use → rehab for all of Thailand · plus the FAQ</li>
+        </ul>
+      </a>
+      <a href="awards.html" class="cv-card reveal" style="display:block">
+        <div class="cv-icon cv-icon--amber"><svg aria-hidden="true"><use href="#i-trophy"/></svg></div>
+        <h3>Awards &amp; Recognition →</h3>
+        <p>Recognition for accessible rehabilitation technology.</p>
+        <ul class="clinic-params" style="margin-top:1rem">
+          <li>ACM/IEEE HRI 2025 · People's Choice Award</li>
+          <li>Peer-reviewed &amp; indexed research</li>
+          <li>Springer book chapter on stroke hand rehabilitation</li>
+          <li>More being added, page updated regularly</li>
+        </ul>
+      </a>
     </div>
-    <div class="cv-highlight reveal">
-      <h3>From Pilot to Impact</h3>
-      <p>These results are drawn from early-stage pilot trials and field deployments. While promising, they represent initial findings that require validation through larger controlled studies. NeuronFRAMES is committed to rigorous, evidence-based development — expanding trials with clinical partners to build the evidence needed for wider adoption.</p>
-    </div>
+    <div style="text-align:center;margin-top:2.4rem"><a href="contact.html" class="btn btn-outline">…or just get in touch</a></div>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ═══════════════════════════ FOUR MODES ═══════════════════════════════ -->
-<section id="modes" class="section">
+<!-- ═══════════════════════════ MEET THE TEAM ════════════════════════════ -->
+<section id="team" class="section">
   <div class="container">
     <div class="section-header reveal">
-      <div class="section-label">Therapy Modes</div>
-      <h2>Four Integrated <span class="gradient-text">Rehabilitation Modules</span></h2>
-      <p>Each mode addresses a specific rehabilitation need, from physical movement to speech recovery, using accessible web-based technology.</p>
+      <div class="section-label">The People</div>
+      <h2>Meet the <span class="gradient-text">Team</span></h2>
+      <p>A small team of researchers and engineers working hand-in-hand with rehabilitation clinicians, and the authors behind our peer-reviewed publications.</p>
     </div>
-    <div class="modes-grid">
-
-      <!-- Mode 1: EPT -->
-      <div class="mode-card reveal">
-        <div class="mode-num">01</div>
-        <div class="mode-icon">🏃</div>
-        <div class="mode-tag tag-blue">Pose Detection</div>
-        <h3>Enhanced Physical Therapy (EPT)</h3>
-        <p>
-          A pose-detection rehabilitation mode that tracks patient movement using camera-based
-          body landmark detection. It provides visual guidance through pose overlays and
-          automatically counts repetitions and evaluates movement accuracy — giving patients
-          real-time feedback during exercise sessions.
-        </p>
-        <ul class="mode-features">
-          <li>Camera-based body landmark tracking via computer vision</li>
-          <li>Visual pose overlay guiding correct movement form</li>
-          <li>Automatic repetition counting and accuracy scoring</li>
-          <li>Session-by-session progress recording</li>
-          <li>No specialized equipment — works with a standard webcam</li>
-        </ul>
+    <div class="team-grid">
+      <div class="team-card reveal">
+        <div class="team-avatar">CL</div>
+        <h3>Chacharin Lertyosbordin</h3>
+        <div class="team-role">Project Lead · Research</div>
+        <p>Leads the research direction and the work on interactive therapeutic systems presented at ACM/IEEE HRI 2025.</p>
+        <div class="team-tags"><span>Computer Vision</span><span>Rehab Tech</span><span>HRI</span></div>
       </div>
-
-      <!-- Mode 2: GPT -->
-      <div class="mode-card reveal">
-        <div class="mode-num">02</div>
-        <div class="mode-icon">🎮</div>
-        <div class="mode-tag tag-teal">Gamification</div>
-        <h3>Gamified Physical Therapy (GPT)</h3>
-        <p>
-          A game-based therapy mode where patients perform rehabilitation movements through
-          interactive browser games — including reaction tasks, card matching, and motion-based
-          challenges. Designed to increase motivation and adherence by making repetitive
-          exercises feel engaging and rewarding.
-        </p>
-        <ul class="mode-features">
-          <li>Interactive rehabilitation games in the browser</li>
-          <li>Reaction-time tasks and card-matching exercises</li>
-          <li>Motion-based game mechanics tied to therapy goals</li>
-          <li>Score tracking and achievement progression</li>
-          <li>Designed to encourage consistent practice</li>
-        </ul>
+      <div class="team-card reveal">
+        <div class="team-avatar">MT</div>
+        <h3>Maythus Tangprapa</h3>
+        <div class="team-role">Co-Founder · Systems &amp; Clinical Liaison</div>
+        <p>Connects the platform with clinical partners, coordinates hospital deployments, and works across system design, data, and product.</p>
+        <div class="team-tags"><span>Clinical Pilots</span><span>Product</span><span>Data</span></div>
       </div>
-
-      <!-- Mode 3: ITS -->
-      <div class="mode-card reveal">
-        <div class="mode-num">03</div>
-        <div class="mode-icon">🧩</div>
-        <div class="mode-tag tag-purple">Sensor Integration</div>
-        <h3>Interactive Therapeutic System (ITS)</h3>
-        <p>
-          A sensor-integrated rehabilitation system that connects hardware devices — such as
-          grip sensors using force-sensitive resistors and Arduino microcontrollers — to
-          interactive therapy games. Patients interact with therapy exercises using physical
-          input devices, bridging the gap between tangible rehabilitation tools and digital
-          feedback.
-        </p>
-        <ul class="mode-features">
-          <li>Arduino-based sensor input devices</li>
-          <li>Force-sensitive resistor (FSR) grip measurement</li>
-          <li>Real-time sensor data visualization</li>
-          <li>Hardware-connected therapy games</li>
-          <li>Affordable, buildable sensor kits</li>
-        </ul>
+      <div class="team-card reveal">
+        <div class="team-avatar">NJ</div>
+        <h3>Nuntipat Jiwasurat</h3>
+        <div class="team-role">Co-Founder · Engineering &amp; Hardware</div>
+        <p>Builds the sensor integration and gamified interfaces, including the force-sensitive hand-rehabilitation work published with Springer.</p>
+        <div class="team-tags"><span>Arduino / FSR</span><span>Web Games</span><span>Hardware</span></div>
       </div>
-
-      <!-- Mode 4: SIT -->
-      <div class="mode-card reveal">
-        <div class="mode-num">04</div>
-        <div class="mode-icon">🗣️</div>
-        <div class="mode-tag tag-orange">Speech AI</div>
-        <h3>Speech Improvement Therapy (SIT)</h3>
-        <p>
-          A speech rehabilitation module that uses browser-based speech recognition to support
-          pronunciation practice, vocabulary exercises, and communication training. Patients
-          receive immediate feedback on their speech accuracy through the Web Speech API,
-          making speech therapy more accessible outside clinical settings.
-        </p>
-        <ul class="mode-features">
-          <li>Browser-based speech recognition (Web Speech API)</li>
-          <li>Pronunciation practice with instant feedback</li>
-          <li>Vocabulary building and word exercises</li>
-          <li>Communication training activities</li>
-          <li>Session progress logs for review</li>
-        </ul>
+      <div class="team-card reveal">
+        <div class="team-avatar">FS</div>
+        <h3>Prof. Filippo Sanfilippo</h3>
+        <div class="team-role">Academic Advisor · University of Agder</div>
+        <p>Advises on AI-driven rehabilitation, biomechatronics, and collaborative robotics via the University of Agder partnership.</p>
+        <div class="team-tags"><span>AI &amp; Robotics</span><span>Biomechatronics</span><span>Academia</span></div>
       </div>
-
     </div>
+    <p class="team-note reveal">Supported by rehabilitation professionals at King Chulalongkorn Memorial Hospital, Burapha University Hospital, and Bangkok International Hospital, and academic partners at the University of Agder and Chulalongkorn University. <a href="research.html#research" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px">More on the Research page →</a></p>
   </div>
 </section>
 
 <div class="divider"></div>
 
-<!-- ═══════════════════════════ AFT ══════════════════════════════════════ -->
-<section id="aft" class="section">
+<!-- ═══════════════════════════════ CTA ══════════════════════════════════ -->
+<section class="section" style="padding:90px 0">
   <div class="container">
-    <div class="training-grid">
-      <div class="training-content reveal">
-        <div class="section-label">Adaptive Training</div>
-        <h2>Adaptive Friendly <span class="gradient-text">Training</span></h2>
-        <p>NeuronFRAMES automatically adjusts therapy difficulty based on patient performance — ensuring exercises remain challenging but achievable throughout the recovery process.</p>
-        <p>When the system detects a patient is struggling, it responds by easing demands. When performance improves, therapy challenges increase gradually to promote continued progress.</p>
-        <ul class="training-list">
-          <li><span class="li-icon">🔽</span> <div><strong style="color:var(--white)">When struggling:</strong> Movement thresholds relax, repetition targets decrease, and game difficulty lowers to prevent frustration</div></li>
-          <li><span class="li-icon">🔼</span> <div><strong style="color:var(--white)">When improving:</strong> Movement precision requirements increase, exercise targets expand, and therapy challenges scale up progressively</div></li>
-          <li><span class="li-icon">⚖️</span> <div><strong style="color:var(--white)">Balanced progression:</strong> Maintains the therapeutic zone between too easy and too hard — maximizing both motivation and clinical improvement</div></li>
-        </ul>
+    <div class="cv-highlight reveal" style="text-align:center;padding:3rem 2.5rem">
+      <h2 style="margin-bottom:.8rem">Rehabilitation Within Reach of <span class="gradient-text">Every Patient in Thailand</span></h2>
+      <p style="max-width:660px;margin:0 auto 1.8rem">2.6 billion people worldwide need rehabilitation, and most never get consistent care. Starting from Thailand's hospitals and communities, we're building toward a future where good rehab is affordable, engaging, and available wherever a patient is.</p>
+      <div class="hero-actions" style="justify-content:center">
+        <a href="contact.html" class="btn btn-primary">Partner with us</a>
+        <a href="research.html" class="btn btn-outline">See the roadmap</a>
       </div>
-      <div class="training-visual reveal">
-        <h4 style="font-size:.9rem;color:var(--white);margin-bottom:1.5rem;text-align:center">Adaptive Difficulty Scaling</h4>
-        <div class="diff-scale">
-          <div class="diff-row">
-            <div class="diff-label" style="color:var(--teal)">Easy</div>
-            <div class="diff-bar"><div class="diff-fill easy"></div></div>
-          </div>
-          <div class="diff-row">
-            <div class="diff-label" style="color:var(--cyan)">Medium</div>
-            <div class="diff-bar"><div class="diff-fill medium"></div></div>
-          </div>
-          <div class="diff-row">
-            <div class="diff-label" style="color:#7700bb">Hard</div>
-            <div class="diff-bar"><div class="diff-fill hard"></div></div>
-          </div>
-        </div>
-        <div class="diff-arrows">
-          <div class="diff-arrow">⬇ Lower thresholds</div>
-          <div class="diff-arrow">⬆ Higher precision</div>
-        </div>
-        <div class="diff-desc">System adjusts automatically based on real-time patient performance</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══════════════════════════ FFT ══════════════════════════════════════ -->
-<section id="fft" class="section">
-  <div class="container">
-    <div class="training-grid" style="direction:rtl">
-      <div class="training-content reveal" style="direction:ltr">
-        <div class="section-label">Family Engagement</div>
-        <h2>Family Friendly <span class="gradient-text">Training</span></h2>
-        <p>Patient motivation significantly increases when family members participate in the rehabilitation process. NeuronFRAMES is designed to include family involvement as a core component of home-based therapy.</p>
-        <p>This feature is particularly important in home rehabilitation environments, where consistent practice depends on a support system that extends beyond the clinical setting.</p>
-        <ul class="training-list">
-          <li><span class="li-icon">🤝</span> <div><strong style="color:var(--white)">Assisted exercises:</strong> Family members help position patients, provide verbal encouragement, and assist with movement during guided exercises</div></li>
-          <li><span class="li-icon">🎮</span> <div><strong style="color:var(--white)">Shared therapy games:</strong> Collaborative and competitive game modes allow family members to participate alongside patients during therapy sessions</div></li>
-          <li><span class="li-icon">📅</span> <div><strong style="color:var(--white)">Consistent practice:</strong> Family involvement creates accountability and routine, helping patients maintain regular rehabilitation schedules at home</div></li>
-        </ul>
-      </div>
-      <div class="training-visual reveal" style="direction:ltr">
-        <h4 style="font-size:.9rem;color:var(--white);margin-bottom:1.5rem;text-align:center">Collaborative Rehabilitation Model</h4>
-        <div class="fft-participants">
-          <div class="fft-role">
-            <div class="fft-role-icon">👨‍⚕️</div>
-            <h4>Clinician</h4>
-            <p>Prescribes &amp; monitors</p>
-          </div>
-          <div class="fft-role">
-            <div class="fft-role-icon">🧑‍🦽</div>
-            <h4>Patient</h4>
-            <p>Performs exercises</p>
-          </div>
-          <div class="fft-role">
-            <div class="fft-role-icon">👨‍👩‍👧</div>
-            <h4>Family</h4>
-            <p>Assists &amp; encourages</p>
-          </div>
-        </div>
-        <div class="fft-connector">
-          ← Connected through NeuronFRAMES →
-        </div>
-        <div class="diff-desc">Family engagement leads to higher therapy adherence and better rehabilitation outcomes</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══════════════════════ CLINICAL INTEGRATION ═════════════════════════ -->
-<section id="clinical-int" class="section">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-label">Clinical Value</div>
-      <h2>Designed for Real <span class="gradient-text">Clinical Rehabilitation</span></h2>
-      <p>NeuronFRAMES integrates into hospital and clinic workflows — automating documentation, enabling remote monitoring, and providing quantitative outcome data. Pilot results from Burapha University Hospital demonstrate measurable clinical improvements across supervised patient cohorts.</p>
-    </div>
-    <div class="clinic-grid">
-      <div class="clinic-card reveal">
-        <div class="clinic-icon">📈</div>
-        <h3>Quantitative Outcome Tracking</h3>
-        <p>Every therapy session generates structured data — movement accuracy, repetition counts, grip force, and game performance scores. In the hospital pilot, clinicians used this data to track patient progress across 6–9 weeks, observing ~24% overall improvement without additional manual documentation.</p>
-        <ul class="clinic-params">
-          <li>Physical strength improvement: +9.86% (pilot avg)</li>
-          <li>Pose correction accuracy: +19.48% (pilot avg)</li>
-          <li>Game-based performance: +49.41% (pilot avg)</li>
-          <li>Rehabilitation completion speed: +5.53% (pilot avg)</li>
-        </ul>
-      </div>
-      <div class="clinic-card reveal">
-        <div class="clinic-icon">💵</div>
-        <h3>Reduce Rehabilitation Costs</h3>
-        <p>Home-based therapy sessions reduce hospital visits, transportation expenses, and per-session fees. Pilot data indicate average savings of <strong>$264/month per patient</strong> (up to $320/month), representing an approximate 47% reduction in out-of-pocket costs — making sustained rehabilitation financially viable for more patients.</p>
-        <ul class="clinic-params">
-          <li>Fewer required in-person hospital visits</li>
-          <li>Lower transportation and session costs</li>
-          <li>~47% reduction in patient rehabilitation expenses</li>
-        </ul>
-      </div>
-      <div class="clinic-card reveal">
-        <div class="clinic-icon">📄</div>
-        <h3>Automated Reports &amp; Documentation</h3>
-        <p>The system produces structured session summaries and progress reports that clinicians can use for treatment planning, clinical documentation, and interdisciplinary communication — reducing time spent on manual record-keeping.</p>
-        <ul class="clinic-params">
-          <li>Exportable session reports for medical records</li>
-          <li>Multi-session progress tracking and trend analysis</li>
-          <li>Quantitative data supporting clinical decision-making</li>
-        </ul>
-      </div>
-      <div class="clinic-card reveal">
-        <div class="clinic-icon">📡</div>
-        <h3>Remote Monitoring &amp; Home Rehabilitation</h3>
-        <p>Clinicians review patient therapy data remotely, tracking exercise completion and movement quality between visits. In the community trial, 96 participants across 61 households completed home-based therapy over 3 months — demonstrating that remote rehabilitation can produce measurable outcomes (23% avg improvement) outside clinical settings.</p>
-        <ul class="clinic-params">
-          <li>Remote access to patient session data</li>
-          <li>Monitor therapy adherence between hospital visits</li>
-          <li>Community-validated across 61 households</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ══════════════════════════ RESEARCH & DEVELOPMENT ═════════════════════════════ -->
-<section id="milestones" class="section">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-label">Research &amp; Development</div>
-      <h2>Built Through <span class="gradient-text">Research &amp; Collaboration</span></h2>
-      <p>NeuronFRAMES is developed through academic research, innovation competitions, and collaboration with rehabilitation professionals who inform every design decision.</p>
-    </div>
-    <div class="collab-tracks">
-      <div class="collab-track reveal">
-        <div class="collab-icon">🔬</div>
-        <h3>Academic Research</h3>
-        <p>The project is grounded in research on computer vision for movement analysis, gamification in healthcare, and accessible rehabilitation technology. Each module is informed by existing evidence on effective therapy delivery.</p>
-      </div>
-      <div class="collab-track reveal">
-        <div class="collab-icon">👨‍⚕️</div>
-        <h3>Clinical Feedback</h3>
-        <p>Physiotherapists, occupational therapists, and speech-language professionals provide ongoing guidance to ensure the system's exercises, metrics, and interfaces align with real clinical workflows and patient needs.</p>
-      </div>
-      <div class="collab-track reveal">
-        <div class="collab-icon">🏗️</div>
-        <h3>Innovation &amp; Prototyping</h3>
-        <p>NeuronFRAMES has been developed through iterative prototyping cycles, incorporating user testing, hardware integration experiments, and software architecture improvements at each stage.</p>
-      </div>
-    </div>
-    <div class="partner-logos reveal">
-      <div class="partner-pill"><span>💻</span> Web Technologies (HTML/CSS/JS)</div>
-      <div class="partner-pill"><span>📷</span> Computer Vision Pose Detection</div>
-      <div class="partner-pill"><span>🔌</span> Arduino Microcontrollers</div>
-      <div class="partner-pill"><span>🎙️</span> Web Speech API</div>
-      <div class="partner-pill"><span>📊</span> Data Visualization</div>
-      <div class="partner-pill"><span>🎮</span> Browser-Based Games</div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ════════════════════════════ PUBLICATIONS ═════════════════════════════════ -->
-<section id="awards" class="section">
-  <div class="container">
-    <div class="publications reveal">
-      <div class="pub-header">
-        <h3>Published Research</h3>
-        <div class="section-label" style="margin:0">Peer-Reviewed</div>
-      </div>
-      <div class="pub-list">
-        <div class="pub-item">
-          <div class="pub-year">2025</div>
-          <div class="pub-info">
-            <h4><a href="https://dl.acm.org/doi/abs/10.5555/3721488.3721816" target="_blank" style="color:var(--white);text-decoration:underline;text-underline-offset:3px">Interactive Therapeutic Systems: A Gamified Approach to Physical Rehabilitation and Data Collection</a></h4>
-            <p>Chacharin Lertyosbordin, Maythus Tangprapa, Nuntipat Jiwasurat — Presented at ACM/IEEE HRI 2025 and awarded People's Choice Award.</p>
-            <div class="journal">20th ACM/IEEE International Conference on Human-Robot Interaction (HRI 2025) · <a href="https://ieeexplore.ieee.org/document/10973829/" target="_blank" style="color:var(--teal)">IEEE Xplore</a></div>
-          </div>
-        </div>
-        <div class="pub-item">
-          <div class="pub-year">2025</div>
-          <div class="pub-info">
-            <h4><a href="https://ieeexplore.ieee.org/document/10973829/" target="_blank" style="color:var(--white);text-decoration:underline;text-underline-offset:3px">Interactive Therapeutic Systems: A Gamified Approach to Hand Rehabilitation and AI-driven Support</a></h4>
-            <p>Chacharin Lertyosbordin, Maythus Tangprapa, Nuntipat Jiwasurat — IEEE Xplore listing of the HRI 2025 conference paper.</p>
-            <div class="journal">2025 20th ACM/IEEE International Conference on Human-Robot Interaction (HRI) · IEEE Xplore</div>
-          </div>
-        </div>
-        <div class="pub-item">
-          <div class="pub-year" style="background:rgba(0,168,133,.1);color:var(--teal)">In Press</div>
-          <div class="pub-info">
-            <h4><a href="https://link.springer.com/chapter/10.1007/978-3-032-14929-9_1" target="_blank" style="color:var(--white);text-decoration:underline;text-underline-offset:3px">A Hybrid Mirror Therapy and Gamified Rehabilitation System for Stroke Patients Using a Force-Sensitive Flappy Bird Interface</a></h4>
-            <p>Nuntipat Jiwasurat, Maythus Tangprapa, Filippo Sanfilippo — Presents a gamified rehabilitation system combining mirror therapy with FSR-based input for stroke recovery.</p>
-            <div class="journal">Proceedings of the 1st International Symposium on Biomechatronics and Robotics in Healthcare (BioMRH 2025) · Lecture Notes in Networks and Systems, Springer · <em>Forthcoming</em></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══════════════════════ CLINICAL PARTNERSHIPS ════════════════════════ -->
-<section id="clinical-partners" class="section">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-label">Clinical Collaboration</div>
-      <h2>Developed With <span class="gradient-text">Clinical Partners</span></h2>
-      <p>Clinical feedback from rehabilitation professionals at leading institutions helps guide system development — ensuring NeuronFRAMES meets real-world clinical needs.</p>
-    </div>
-    <h3 style="font-size:1.2rem;color:var(--white);margin-bottom:2rem;text-align:center" class="reveal">Hospital Alliances</h3>
-    <!-- Featured: King Chulalongkorn Memorial Hospital -->
-    <div class="partners-grid" style="grid-template-columns:1fr;max-width:900px;margin-bottom:2rem">
-      <div class="partner-card partner-card--featured reveal">
-        <div class="featured-header">
-          <img src="cupmr_logo.png" alt="Chulalongkorn University" class="partner-card-logo" style="width:180px;height:180px;margin:0" />
-          <div class="featured-header-text">
-            <h3 style="font-size:1.5rem;margin-bottom:.5rem">King Chulalongkorn Memorial Hospital</h3>
-            <div class="partner-dept" style="font-size:.9rem;margin-bottom:.8rem">Chulalongkorn University Department of Physical Medicine and Rehabilitation</div>
-            <p>Collaborative partnership across three clinical divisions — providing guidance on rehabilitation protocols, patient assessment, therapy design, and technology integration into clinical workflows.</p>
-          </div>
-        </div>
-        <div class="partner-depts-list">
-          <div class="partner-dept-card reveal">
-            <div class="partner-dept-card-icon">🧠</div>
-            <h4>Occupational Therapy Division</h4>
-            <p>Guiding the design of activities targeting hand coordination, daily living skills, and cognitive exercises for patients recovering from stroke and neurological conditions.</p>
-          </div>
-          <div class="partner-dept-card reveal">
-            <div class="partner-dept-card-icon">🏥</div>
-            <h4>Inpatient Department</h4>
-            <p>Providing feedback on how NeuronFRAMES integrates into structured therapy schedules, bedside exercise routines, and patient progress monitoring during hospital stays.</p>
-          </div>
-          <div class="partner-dept-card reveal">
-            <div class="partner-dept-card-icon">🚶</div>
-            <h4>Outpatient Department</h4>
-            <p>Informing how NeuronFRAMES supports continuity of care — enabling patients to continue prescribed exercises at home while clinicians track adherence between visits.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="partners-grid" style="grid-template-columns:repeat(2,1fr);max-width:800px">
-      <div class="partner-card reveal">
-        <img src="burapha_logo.png" alt="Burapha University" class="partner-card-logo logo-md" />
-        <h3>Burapha University Hospital</h3>
-        <div class="partner-dept">Rehabilitation Medicine</div>
-        <p>Contributing clinical feedback on therapy exercise design, patient engagement strategies, and system usability for rehabilitation professionals.</p>
-      </div>
-      <div class="partner-card reveal">
-        <img src="bangkokhospital_logo.png" alt="Bangkok International Hospital" class="partner-card-logo" />
-        <h3>Bangkok International Hospital</h3>
-        <div class="partner-dept">Brain x Bone</div>
-        <p>Collaborating on neurological and orthopedic rehabilitation approaches, integrating clinical expertise in brain and musculoskeletal recovery with technology-assisted therapy.</p>
-      </div>
-    </div>
-    <h3 style="font-size:1.2rem;color:var(--white);margin:3rem 0 2rem;text-align:center" class="reveal">Academic &amp; Research Partners</h3>
-    <div class="partners-grid" style="max-width:800px">
-      <div class="partner-card reveal">
-        <img src="UiA_logo.png" alt="University of Agder" class="partner-card-logo" />
-        <h3>University of Agder</h3>
-        <div class="partner-dept">Artificial Intelligence, Biomechatronics, and Collaborative Robotics</div>
-        <p>Research collaboration on AI-driven rehabilitation systems, biomechatronic sensor integration, and collaborative robotics for accessible therapy solutions.</p>
-      </div>
-      <div class="partner-card reveal">
-        <img src="cueng_logo.png" alt="Chulalongkorn University Faculty of Engineering" class="partner-card-logo logo-md" />
-        <h3>Chulalongkorn University</h3>
-        <div class="partner-dept">Faculty of Engineering</div>
-        <p>Academic partnership supporting engineering research, system architecture development, and technical innovation in rehabilitation technology.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ═══════════════════════ WHY HOSPITALS ════════════════════════════════ -->
-<section id="why-hospitals" class="section">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-label">For Healthcare Leaders</div>
-      <h2>Why Hospitals Choose <span class="gradient-text">NeuronFRAMES</span></h2>
-      <p>A rehabilitation platform built for clinical deployment — delivering measurable patient outcomes with minimal infrastructure requirements.</p>
-    </div>
-    <div class="why-grid">
-      <div class="why-card reveal">
-        <div class="why-icon">🌐</div>
-        <h3>Accessible Deployment</h3>
-        <p>Runs entirely in a standard web browser. No specialized software installation, no expensive proprietary hardware, and no complex IT infrastructure. A webcam, internet connection, and browser are all that is needed to begin delivering therapy.</p>
-      </div>
-      <div class="why-card reveal">
-        <div class="why-icon">🎮</div>
-        <h3>Increased Patient Engagement</h3>
-        <p>Gamified therapy exercises produce measurably higher adherence rates compared with traditional repetitive rehabilitation. Patients are more likely to complete their prescribed programs when therapy feels engaging rather than monotonous.</p>
-      </div>
-      <div class="why-card reveal">
-        <div class="why-icon">📐</div>
-        <h3>Scalable Rehabilitation</h3>
-        <p>Supports both in-clinic supervised sessions and remote home-based rehabilitation. A single platform serves patients across multiple care settings — reducing the gap between hospital visits and enabling continuous therapy.</p>
-      </div>
-      <div class="why-card reveal">
-        <div class="why-icon">📊</div>
-        <h3>Objective Data Collection</h3>
-        <p>Every therapy session generates quantitative metrics — repetition counts, movement accuracy, reaction times, grip strength, and speech response data. Clinicians receive objective evidence to support treatment planning and outcome reporting.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ════════════════════════════ CONTACT ═════════════════════════════════ -->
-<section id="contact" class="section">
-  <div class="container">
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <div class="section-label">Get In Touch</div>
-        <h2>Interested in <span class="gradient-text">NeuronFRAMES?</span></h2>
-        <p>Whether you are a rehabilitation professional, researcher, educator, or student interested in accessible therapy technology — we welcome your questions, feedback, and collaboration ideas.</p>
-        <div class="contact-ways">
-          <a href="mailto:admin@neuronframes.com" class="cw-item cw-item--link">
-            <div class="cw-icon">📧</div>
-            <div>
-              <div class="cw-label">Email</div>
-              <div class="cw-val">admin@neuronframes.com <span style="font-size:.75rem;color:var(--accent);margin-left:4px">↗</span></div>
-            </div>
-          </a>
-          <div class="cw-item">
-            <div class="cw-icon">🔬</div>
-            <div>
-              <div class="cw-label">Project Focus</div>
-              <div class="cw-val">Research &amp; Innovation in Rehabilitation</div>
-            </div>
-          </div>
-          <div class="cw-item">
-            <div class="cw-icon">🛠️</div>
-            <div>
-              <div class="cw-label">Technology Stack</div>
-              <div class="cw-val">HTML · CSS · JS · Arduino</div>
-            </div>
-          </div>
-          <div class="cw-item">
-            <div class="cw-icon">🤝</div>
-            <div>
-              <div class="cw-label">Open To</div>
-              <div class="cw-val">Academic collaboration &amp; clinical feedback</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <form id="contact-form" class="contact-form reveal" action="https://formsubmit.co/ajax/admin@neuronframes.com" method="POST">
-        <h3 style="margin-bottom:1.5rem;font-size:1.3rem;color:var(--white)">Send Us a Message</h3>
-        <input type="hidden" name="_subject" value="New NeuronFRAMES Contact Form Submission">
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_template" value="table">
-        <input type="text" name="_honey" style="display:none">
-        <div class="form-row">
-          <div class="form-group">
-            <label>First Name</label>
-            <input type="text" name="first_name" placeholder="Your first name" required />
-          </div>
-          <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" name="last_name" placeholder="Your last name" required />
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Email Address</label>
-          <input type="email" name="email" placeholder="you@example.com" required />
-        </div>
-        <div class="form-group">
-          <label>Organization</label>
-          <input type="text" name="organization" placeholder="University / Clinic / Organization" />
-        </div>
-        <div class="form-group">
-          <label>I am a...</label>
-          <select name="role">
-            <option value="">Select your role</option>
-            <option>Rehabilitation Professional</option>
-            <option>Researcher / Academic</option>
-            <option>Student</option>
-            <option>Educator</option>
-            <option>Healthcare Professional</option>
-            <option>Patient / Family Member</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea rows="4" name="message" placeholder="Tell us about your interest in NeuronFRAMES..." required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary form-submit" id="form-btn">
-          Send Message →
-        </button>
-        <div id="form-status" style="display:none;margin-top:1.2rem;padding:1.2rem;border-radius:14px;text-align:center;font-weight:600;font-size:.95rem"></div>
-      </form>
     </div>
   </div>
 </section>
@@ -1819,105 +675,49 @@
         <div class="logo">
           <img src="nfl1.png" alt="NeuronFRAMES" class="logo-img" />
         </div>
-        <p>An AI-assisted rehabilitation research project making therapy more accessible, engaging, and measurable through web-based technology.</p>
+        <p>An AI-assisted rehabilitation platform, in clinical use at King Chulalongkorn Memorial Hospital, making therapy more accessible, engaging, and measurable.</p>
         <div class="footer-social">
-          <div class="social-btn">📂</div>
-          <div class="social-btn">📧</div>
+          <a class="social-btn" href="research.html" aria-label="Research and publications"><svg aria-hidden="true"><use href="#i-folder"/></svg></a>
+          <a class="social-btn" href="mailto:admin@neuronframes.com" aria-label="Email NeuronFRAMES"><svg aria-hidden="true"><use href="#i-mail"/></svg></a>
         </div>
       </div>
       <div class="footer-col">
+        <h4>Pages</h4>
+        <a href="index.html">Home</a>
+        <a href="platform.html">Platform &amp; Therapy</a>
+        <a href="impact.html">Impact &amp; Clinicians</a>
+        <a href="partnership.html">Partnership</a>
+        <a href="research.html">Research &amp; Progress</a>
+        <a href="awards.html">Awards &amp; Recognition</a>
+        <a href="system.html">Interactive Journey</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
         <h4>Platform</h4>
-        <a href="#what-is">About NeuronFRAMES</a>
-        <a href="#clinical-value">Societal Impact</a>
-        <a href="#modes">Therapy Modes</a>
-        <a href="#awards">Publications</a>
+        <a href="platform.html#what-is">What It Is</a>
+        <a href="platform.html#how-it-works">How It Works</a>
+        <a href="platform.html#modes">Therapy Modes</a>
+        <a href="platform.html#training">Adaptive &amp; Family Training</a>
       </div>
       <div class="footer-col">
-        <h4>For Clinicians</h4>
-        <a href="#clinical-int">Clinical Value</a>
-        <a href="#aft">Adaptive Training</a>
-        <a href="#fft">Family Training</a>
-        <a href="#clinical-partners">Partnerships</a>
-        <a href="#why-hospitals">Why NeuronFRAMES</a>
-      </div>
-      <div class="footer-col">
-        <h4>Research</h4>
-        <a href="#milestones">Research &amp; Development</a>
-        <a href="#awards">Milestones</a>
-        <a href="#contact">Contact</a>
+        <h4>Impact &amp; Research</h4>
+        <a href="impact.html#pilot-results">Clinical Outcomes</a>
+        <a href="impact.html#quality-of-life">Quality of Life</a>
+        <a href="impact.html#ethics">Ethics &amp; Safety</a>
+        <a href="research.html#research">Publications &amp; Team</a>
+        <a href="research.html#faq">FAQ</a>
       </div>
     </div>
     <div class="footer-bottom">
-      <div>© 2025 <span>NeuronFRAMES</span> Research Project</div>
-      <div>Accessible rehabilitation. <span>Powered by innovation.</span></div>
+      <div>© 2025 <span>NeuronFRAMES</span></div>
+      <div>Advancing Accessible Rehabilitation Through <span>Clinical Technology</span></div>
     </div>
   </div>
 </footer>
 
 <!-- ═══════════════════════════ SCRIPTS ══════════════════════════════════ -->
-<script>
-  /* Navbar scroll effect */
-  window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
-  });
-
-  /* Scroll reveal */
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); }
-    });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  /* Contact form AJAX submit */
-  document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('form-btn');
-    const status = document.getElementById('form-status');
-    const form = this;
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
-    fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    }).then(r => r.json()).then(data => {
-      if (data.success) {
-        status.style.display = 'block';
-        status.style.background = 'rgba(0,168,133,.08)';
-        status.style.border = '1px solid rgba(0,168,133,.25)';
-        status.style.color = '#00875a';
-        status.textContent = 'Message sent successfully! We will get back to you soon.';
-        form.reset();
-        btn.textContent = 'Sent!';
-        setTimeout(() => { btn.disabled = false; btn.textContent = 'Send Message →'; }, 4000);
-      } else {
-        throw new Error();
-      }
-    }).catch(() => {
-      status.style.display = 'block';
-      status.style.background = 'rgba(220,50,50,.06)';
-      status.style.border = '1px solid rgba(220,50,50,.2)';
-      status.style.color = '#cc3333';
-      status.textContent = 'Something went wrong. Please try again or email us directly.';
-      btn.disabled = false;
-      btn.textContent = 'Send Message →';
-    });
-  });
-
-  /* Smooth active nav link */
-  const sections = document.querySelectorAll('section[id]');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
-    });
-    document.querySelectorAll('.nav-links a').forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + current
-        ? 'var(--white)' : '';
-    });
-  });
-</script>
-
+<script src="main.js"></script>
+<script src="th-cache.js"></script>
+<script src="lang-toggle.js"></script>
 </body>
 </html>

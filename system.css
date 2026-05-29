@@ -1,0 +1,241 @@
+/* ════════════ NeuronFRAMES — "Walk Inside" ════════════
+   A first-person walk through a REAL 3D hospital (built in Three.js, see
+   system.js): corridor, reception desk, modeled doors, signage, ceiling
+   lights, daylight. This stylesheet handles the page chrome, the HUD over
+   the WebGL canvas (intro, controls, floor-plan, hover tip, closing CTA),
+   the in-page department rooms, and an accessible flat fallback.
+   Scoped under body.theme-system — a clean, light hospital theme. */
+
+/* ─────────── Page theme tokens — clean light hospital (flips shared nav/footer) ─────────── */
+.theme-system {
+  --bg-primary:   oklch(0.98 0.006 240);
+  --bg-secondary: oklch(0.96 0.008 236);
+  --bg-body:      oklch(0.96 0.008 236);
+  --surface:      oklch(1 0 0);
+  --text-primary: oklch(0.42 0.02 260);
+  --text-muted:   oklch(0.54 0.02 260);
+  --text-heading: oklch(0.24 0.03 262);
+  --card-bg:      oklch(1 0 0 / 0.92);
+  --border:       oklch(0.55 0.02 260 / 0.18);
+  --shadow:       0 30px 70px -28px oklch(0.4 0.05 255 / .35);
+  --ink-2:        oklch(0.20 0.03 264);
+  --font-display: 'Bodoni Moda', Georgia, 'Times New Roman', serif;
+  background: oklch(0.95 0.01 236);
+  color: var(--text-primary);
+}
+.theme-system .bg-ambient, .theme-system .bg-grid { display: none; }
+.theme-system #navbar {
+  background: oklch(1 0 0 / 0.72);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  border-bottom: 1px solid oklch(0.5 0.02 260 / 0.12);
+}
+.theme-system #navbar.scrolled { background: oklch(1 0 0 / 0.9); box-shadow: 0 10px 34px -20px oklch(0.4 0.05 255 / .4); }
+.theme-system footer { background: oklch(0.16 0.025 264); position: relative; z-index: 5; }
+.theme-system .section-label {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .22em;
+  background: oklch(0.62 0.18 250 / .1); border: 1px solid oklch(0.62 0.18 250 / .2); color: oklch(0.5 0.18 252);
+}
+.theme-system .gradient-text {
+  background: none; -webkit-background-clip: initial; background-clip: initial; -webkit-text-fill-color: currentColor;
+  color: oklch(0.55 0.17 250); font-style: italic; font-weight: 700; animation: none;
+}
+body.theme-system { overflow-x: clip; }
+body.room-open { overflow: hidden; }
+
+/* ════════════════════ THE 3D HALL ════════════════════ */
+#hall-track { position: relative; height: 800vh; background: oklch(0.9 0.012 236); }
+#hall-viewport {
+  position: sticky; top: 0; height: 100vh; overflow: hidden;
+  background: linear-gradient(180deg, oklch(0.95 0.01 230), oklch(0.88 0.016 236));
+}
+#hall-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* tiny loading shimmer until the scene paints */
+.hall-loading { position: absolute; inset: 0; display: grid; place-items: center; z-index: 2; transition: opacity .6s; pointer-events: none; }
+.hall-loading span { width: 34px; height: 34px; border-radius: 50%; border: 3px solid oklch(0.6 0.05 250 / .25); border-top-color: oklch(0.55 0.17 250); animation: hallSpin .8s linear infinite; }
+@keyframes hallSpin { to { transform: rotate(360deg); } }
+
+/* opening title */
+#hall-intro { position: absolute; inset: 0; z-index: 6; display: flex; align-items: center; pointer-events: none; will-change: opacity; }
+#hall-intro::before { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, oklch(0.97 0.01 235 / .9) 0%, oklch(0.97 0.01 235 / .5) 34%, transparent 62%); }
+#hall-intro .container { position: relative; text-align: left; }
+.hall-intro-title {
+  font-family: var(--font-display); font-weight: 800; font-size: clamp(3rem, 11vw, 8rem);
+  line-height: .96; letter-spacing: -.02em; color: var(--text-heading); margin: 1rem 0 1.2rem;
+  text-shadow: 0 10px 40px oklch(0.6 0.05 250 / .25);
+}
+.hall-intro-hook { font-size: clamp(1.02rem, 2vw, 1.32rem); color: var(--text-primary); max-width: 50ch; line-height: 1.55; margin-bottom: 2.4rem; }
+.hall-intro-hint { display: flex; align-items: center; gap: .85rem; font-size: .82rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; letter-spacing: .03em; }
+.hall-intro-hint b { color: oklch(0.5 0.18 252); font-weight: 700; }
+.hall-intro-mouse { width: 24px; height: 38px; border: 1.6px solid oklch(0.5 0.04 258 / .5); border-radius: 13px; position: relative; flex: none; }
+.hall-intro-mouse::after { content: ''; position: absolute; left: 50%; top: 7px; width: 3px; height: 8px; border-radius: 2px; background: oklch(0.55 0.17 250); transform: translateX(-50%); animation: hallWheel 1.6s ease-in-out infinite; }
+@keyframes hallWheel { 0%{opacity:0;transform:translate(-50%,0)} 30%{opacity:1} 60%{opacity:1;transform:translate(-50%,10px)} 100%{opacity:0;transform:translate(-50%,10px)} }
+
+/* closing reception / CTA (fades in at the end of the hall) */
+#hall-outro { position: absolute; inset: 0; z-index: 6; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity .4s; }
+#hall-outro .container { max-width: 640px; text-align: center; background: oklch(1 0 0 / .82); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid oklch(0.55 0.02 260 / .14); border-radius: 22px; padding: 2.4rem 2rem; box-shadow: 0 40px 90px -34px oklch(0.3 0.04 258 / .5); }
+.hall-end-tag { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: .64rem; letter-spacing: .26em; color: oklch(0.5 0.18 252); border: 1px solid oklch(0.62 0.18 250 / .25); border-radius: 6px; padding: .3rem .7rem; margin-bottom: 1rem; }
+#hall-outro h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.04; color: var(--text-heading); margin-bottom: 1rem; }
+#hall-outro p { color: var(--text-muted); max-width: 48ch; margin: 0 auto 1.6rem; font-size: 1.02rem; line-height: 1.6; }
+#hall-outro .hero-actions { justify-content: center; }
+
+/* hover tooltip over a door */
+#hall-hover { position: fixed; z-index: 90; transform: translate(-50%, -135%); pointer-events: none;
+  font-family: 'JetBrains Mono', monospace; font-size: .72rem; letter-spacing: .04em; font-weight: 700; color: #fff;
+  background: oklch(0.5 0.17 250 / .95); padding: .4rem .7rem; border-radius: 8px; white-space: nowrap;
+  opacity: 0; transition: opacity .2s; box-shadow: 0 8px 22px -8px oklch(0.3 0.1 258 / .6); }
+#hall-hover.on { opacity: 1; }
+
+/* persistent controls hint */
+#hall-controls { position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 6;
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; letter-spacing: .08em; color: var(--text-muted);
+  background: oklch(1 0 0 / .72); border: 1px solid oklch(0.55 0.02 260 / .14); border-radius: 999px;
+  padding: .45rem .95rem; pointer-events: none; opacity: 0; transition: opacity .5s; box-shadow: 0 8px 24px -12px oklch(0.3 0.04 258 / .4); }
+#hall-controls b { color: oklch(0.5 0.18 252); }
+body.walking #hall-controls { opacity: 1; }
+
+/* floor-plan progress */
+#hall-map { position: absolute; left: 26px; top: 50%; transform: translateY(-50%); z-index: 6; display: flex; flex-direction: column; gap: .15rem; padding-left: 18px; }
+.hall-map-line { position: absolute; left: 5px; top: 6px; bottom: 6px; width: 2px; background: oklch(0.55 0.04 258 / .2); border-radius: 2px; }
+.hall-map-line i { position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 8px; height: 8px; border-radius: 50%; background: oklch(0.55 0.17 250); box-shadow: 0 0 12px oklch(0.55 0.17 250 / .7); transition: top .25s ease; }
+#hall-map a { position: relative; font-size: .74rem; color: var(--text-muted); text-decoration: none; padding: .26rem 0; transition: color .25s, transform .25s; display: flex; align-items: baseline; gap: .5rem; }
+#hall-map a em { font-style: normal; font-family: 'JetBrains Mono', monospace; font-size: .58rem; opacity: .55; }
+#hall-map a::before { content: ''; position: absolute; left: -16px; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; border-radius: 50%; background: oklch(0.55 0.04 258 / .3); transition: background .25s, box-shadow .25s; }
+#hall-map a:hover { color: var(--text-heading); }
+#hall-map a.active { color: var(--text-heading); transform: translateX(3px); font-weight: 600; }
+#hall-map a.active::before { background: oklch(0.55 0.17 250); box-shadow: 0 0 10px oklch(0.55 0.17 250 / .8); }
+
+/* accessible door buttons — visually hidden, but appear when keyboard-focused */
+#hall-doors-a11y button { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+#hall-doors-a11y button:focus { left: 20px; top: 90px; width: auto; height: auto; z-index: 30; padding: .55rem .9rem; border-radius: 8px; border: 1px solid oklch(0.55 0.17 250); background: #fff; color: var(--text-heading); font-weight: 600; box-shadow: 0 10px 26px -10px oklch(0.3 0.1 258 / .5); }
+
+/* ════════════════════ ROOMS (open in-page) ════════════════════ */
+#rooms { position: fixed; inset: 0; z-index: 2000; display: grid; place-items: center; padding: 92px 20px 28px;
+  background: oklch(0.2 0.03 264 / .5); -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+  opacity: 0; pointer-events: none; transition: opacity .4s ease; }
+body.room-open #rooms { opacity: 1; pointer-events: auto; }
+.room { position: relative; width: 100%; max-width: 1040px; max-height: 88vh; overflow: hidden;
+  display: grid; grid-template-columns: 0.92fr 1.08fr; background: var(--surface); border-radius: 22px;
+  box-shadow: 0 60px 130px -30px oklch(0.2 0.05 260 / .7);
+  opacity: 0; transform: translateY(16px) scale(.94); transition: opacity .45s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
+.room.is-open { opacity: 1; transform: none; }
+.room[hidden] { display: none; }
+.room--data { grid-template-columns: 1fr; max-width: 760px; }
+.room-photo { position: relative; overflow: hidden; min-height: 320px; }
+.room-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.room.no-photo .room-photo { background: linear-gradient(160deg, oklch(0.7 0.12 250), oklch(0.6 0.14 230)); }
+.room.no-photo .room-photo img { display: none; }
+.room-photo-grad { position: absolute; inset: 0; background: linear-gradient(110deg, transparent 60%, oklch(1 0 0 / .12)); pointer-events: none; }
+.room-body { padding: clamp(1.6rem, 3vw, 2.6rem); overflow-y: auto; min-height: 0; max-height: 88vh; -webkit-overflow-scrolling: touch; }
+.room-body--wide { padding: clamp(1.8rem, 3.4vw, 3rem); }
+.room-close { position: absolute; top: 14px; right: 14px; z-index: 3; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  background: oklch(1 0 0 / .9); border: 1px solid oklch(0.55 0.02 260 / .16); color: var(--text-heading); cursor: pointer; box-shadow: 0 6px 18px -8px oklch(0.3 0.04 258 / .5); transition: transform .2s, background .2s; }
+.room-close svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+.room-close:hover { transform: rotate(90deg); background: #fff; }
+.room-tag { font-family: 'JetBrains Mono', monospace; font-size: .64rem; letter-spacing: .18em; color: oklch(0.5 0.18 252); margin-bottom: .7rem; }
+.room-body h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.6rem, 3.4vw, 2.5rem); line-height: 1.05; color: var(--text-heading); margin-bottom: .9rem; }
+.room-lead { font-size: 1.02rem; line-height: 1.6; color: var(--text-primary); margin-bottom: 1.4rem; }
+.room-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.4rem; }
+.room-col h3 { font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; color: oklch(0.5 0.18 252); margin-bottom: .6rem; font-family: 'JetBrains Mono', monospace; }
+.room-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .5rem; }
+.room-col li { position: relative; padding-left: 1.5rem; font-size: .9rem; line-height: 1.4; color: var(--text-primary); }
+.room-col li::before { content: '✓'; position: absolute; left: 0; top: 0; color: oklch(0.6 0.15 168); font-weight: 700; }
+.room-modes { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.6rem; }
+.room-mode { font-family: 'JetBrains Mono', monospace; font-size: .76rem; color: var(--text-muted); background: oklch(0.62 0.18 250 / .06); border: 1px solid oklch(0.62 0.18 250 / .14); border-radius: 8px; padding: .55rem .7rem; }
+.room-mode b { color: var(--text-heading); margin-right: .5rem; }
+.room-actions { display: flex; flex-wrap: wrap; gap: .7rem; }
+.room-back { cursor: pointer; }
+.room-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+.room-stats div { background: oklch(0.62 0.18 250 / .06); border: 1px solid oklch(0.62 0.18 250 / .14); border-radius: 12px; padding: 1rem 1.1rem; }
+.room-stats b { display: block; font-family: var(--font-display); font-weight: 700; font-size: 2rem; color: oklch(0.5 0.18 252); line-height: 1; }
+.room-stats i { font-style: normal; font-size: .78rem; color: var(--text-muted); margin-top: .3rem; display: block; }
+.room-foot { font-size: .72rem; color: var(--text-muted); margin-bottom: 1.4rem; }
+.room-list { list-style: none; margin: 0 0 1.6rem; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
+.room-list li { position: relative; padding-left: 1.4rem; font-size: .9rem; line-height: 1.45; color: var(--text-primary); }
+.room-list li::before { content: '›'; position: absolute; left: 0; top: -1px; color: oklch(0.5 0.18 252); font-weight: 700; }
+.room-partners { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-bottom: 1.6rem; }
+.room-logo { display: flex; align-items: center; gap: .8rem; background: oklch(0.96 0.006 240); border: 1px solid oklch(0.55 0.02 260 / .12); border-radius: 12px; padding: .7rem .8rem; }
+.room-logo img { height: 38px; width: auto; max-width: 84px; object-fit: contain; flex: none; }
+.room-logo span { font-size: .82rem; font-weight: 700; color: var(--text-heading); line-height: 1.2; display: flex; flex-direction: column; }
+.room-logo small { font-weight: 500; font-size: .68rem; color: var(--text-muted); margin-top: .15rem; }
+
+/* when the camera flies INTO the 3D room, dock the info as a card so the room shows around it */
+body.cine { overflow: hidden; }
+/* ONE robust, LARGE card for every room: flex column, body scrolls, close pinned */
+body.in-room-cine #rooms { background: oklch(0.12 0.025 264 / .55) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; display: block !important; padding: 0 !important; }
+body.in-room-cine .room {
+  position: fixed !important; top: 50% !important; left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  display: flex !important; flex-direction: column !important; grid-template-columns: none !important;
+  width: min(900px, 94vw) !important; max-width: min(900px, 94vw) !important;
+  min-height: min(460px, 70vh); max-height: 88vh;
+  overflow: hidden;
+  box-shadow: 0 30px 90px -22px oklch(0.15 0.04 260 / .7);
+}
+body.in-room-cine .room-photo { display: none; }
+body.in-room-cine .room-body, body.in-room-cine .room-body--wide {
+  flex: 1 1 auto; min-height: 0; max-height: none; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+  padding: clamp(1.4rem, 2.6vw, 2.2rem);
+}
+body.in-room-cine .room-close { position: absolute; top: 14px; right: 14px; float: none; margin: 0; }
+/* keep the heading from dominating the card so the info fits */
+body.in-room-cine .room h2 { font-size: clamp(1.3rem, 2.6vw, 1.9rem); line-height: 1.15; margin-bottom: .8rem; }
+body.in-room-cine .room-lead { font-size: 1rem; line-height: 1.55; margin-bottom: 1.1rem; }
+body.in-room-cine .room-cols { gap: 1rem; margin-bottom: 1.1rem; }
+body.in-room-cine .room-tag { margin-bottom: .5rem; }
+/* hide the hall HUD while a room is open so only the info card + dimmed room show */
+body.room-open #hall-intro, body.room-open #hall-outro, body.room-open #hall-controls, body.room-open #hall-map { opacity: 0 !important; pointer-events: none !important; }
+/* "Look around" — hide the card so you can explore the 3D room, then bring it back */
+body.in-room-cine.room-peeking .room { opacity: 0; transform: translateY(30px) scale(.97); pointer-events: none; }
+
+/* look-around toggle (only visible inside a room) */
+#room-peek { display: none; }
+body.in-room-cine #room-peek {
+  display: inline-flex; align-items: center; position: fixed; right: 18px; bottom: 18px; z-index: 2100;
+  font-family: 'JetBrains Mono', monospace; font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+  color: #fff; background: oklch(0.5 0.17 250 / .95); border: none; border-radius: 999px; padding: .6rem 1rem; cursor: pointer;
+  box-shadow: 0 10px 26px -10px oklch(0.3 0.1 258 / .6);
+}
+body.in-room-cine #room-peek:hover { background: oklch(0.55 0.18 250); }
+
+/* richer in-room content */
+.room-extra { border-top: 1px solid var(--border); padding-top: 1.1rem; margin-bottom: 1.4rem; }
+.room-extra h3 { font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; color: oklch(0.5 0.18 252); margin-bottom: .7rem; font-family: 'JetBrains Mono', monospace; }
+.room-steps { margin: 0 0 1rem; padding: 0; list-style: none; counter-reset: step; display: flex; flex-direction: column; gap: .55rem; }
+.room-steps li { position: relative; padding-left: 2.1rem; font-size: .9rem; line-height: 1.45; color: var(--text-primary); counter-increment: step; }
+.room-steps li::before { content: counter(step); position: absolute; left: 0; top: -1px; width: 1.5rem; height: 1.5rem; display: grid; place-items: center; border-radius: 50%; background: oklch(0.62 0.18 250 / .14); color: oklch(0.5 0.18 252); font-family: 'JetBrains Mono', monospace; font-size: .72rem; font-weight: 700; }
+.room-note { font-size: .84rem; line-height: 1.5; color: var(--text-muted); font-style: italic; }
+
+/* ════════════════════ FLAT FALLBACK (no WebGL / reduced motion / small) ════════════════════ */
+.hall-flat #hall-track { height: auto; background: none; }
+.hall-flat #hall-viewport { position: static; height: auto; overflow: visible; background: none; padding: 120px 0 40px; display: flex; flex-direction: column; }
+.hall-flat #hall-canvas, .hall-flat .hall-loading, .hall-flat #hall-controls, .hall-flat #hall-map, .hall-flat #hall-hover, .hall-flat #hall-outro, .hall-flat #hall-doors-a11y { display: none; }
+.hall-flat #hall-intro { order: -1; position: static; display: block; padding: 0 0 .6rem; pointer-events: auto; opacity: 1 !important; }
+.hall-flat #hall-intro::before { display: none; }
+.hall-flat #hall-intro .container { padding: 0 24px; max-width: 1180px; margin: 0 auto; }
+.hall-flat .hall-intro-hint { display: none; }
+.hall-flat #rooms { position: static; opacity: 1; pointer-events: auto; display: block; padding: 1.4rem 24px 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; max-width: 1180px; margin: 0 auto; }
+.hall-flat .room { max-width: none; max-height: none; margin-bottom: 1.4rem; opacity: 1; transform: none; box-shadow: var(--shadow); border: 1px solid var(--border); }
+.hall-flat .room[hidden] { display: grid; }
+.hall-flat .room--data[hidden] { display: block; }
+.hall-flat .room-close, .hall-flat .room-back { display: none; }
+.hall-flat .room-body { overflow: visible; }
+
+/* ════════════════════ Responsive ════════════════════ */
+@media (max-width: 920px) {
+  #hall-map { display: none; }
+  .room { grid-template-columns: 1fr; max-height: 90vh; }
+  .room-photo { min-height: 200px; max-height: 30vh; }
+}
+@media (max-width: 680px) {
+  .hall-intro-title { font-size: clamp(2.6rem, 16vw, 4.4rem); }
+  .room-cols, .room-stats, .room-partners { grid-template-columns: 1fr; }
+}
+
+/* ════════════════════ Reduced motion ════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .hall-intro-mouse::after, .hall-loading span { animation: none !important; }
+  .room { transition: opacity .2s; transform: none; }
+}

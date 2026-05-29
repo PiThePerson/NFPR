@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research & Progress | NeuronFRAMES</title>
+  <meta name="description" content="Roadmap, peer-reviewed publications, the team, and frequently asked questions about NeuronFRAMES." />
+  <link rel="canonical" href="https://neuronframes.com/research.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="NeuronFRAMES" />
+  <meta property="og:title" content="Research & Progress | NeuronFRAMES" />
+  <meta property="og:description" content="Roadmap, peer-reviewed publications, the team, and frequently asked questions about NeuronFRAMES." />
+  <meta property="og:url" content="https://neuronframes.com/research.html" />
+  <meta property="og:image" content="https://neuronframes.com/nfl1.png" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="th_TH" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Research & Progress | NeuronFRAMES" />
+  <meta name="twitter:description" content="Roadmap, peer-reviewed publications, the team, and frequently asked questions about NeuronFRAMES." />
+  <meta name="twitter:image" content="https://neuronframes.com/nfl1.png" />
+  <meta name="theme-color" content="#0a5fff" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='56' font-size='56'>🧠</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script>(function(){try{if(localStorage.getItem('nf-lang')==='th'){var d=document.documentElement;d.lang='th';d.className+=(' nf-cloak');setTimeout(function(){d.classList.remove('nf-cloak');},1500);}}catch(e){}})();</script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-to-content" href="#main">Skip to content</a>
+
+<!-- ═══════════════════════ SVG ICON SPRITE ════════════════════════ -->
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <symbol id="i-microscope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 21h12"/>
+      <path d="M8 21v-3h8v3"/>
+      <path d="M12 18v-4"/>
+      <path d="M9 14h6"/>
+      <circle cx="14.5" cy="7.5" r="3.5"/>
+      <path d="M13 4l3-1.5 1.5 3"/>
+    </symbol>
+    <symbol id="i-doctor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="6" r="3"/>
+      <path d="M6 21v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3"/>
+      <line x1="12" y1="16" x2="12" y2="20"/>
+      <line x1="10" y1="18" x2="14" y2="18"/>
+    </symbol>
+    <symbol id="i-build" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="9" width="18" height="12" rx="1"/>
+      <path d="M3 9l9-5 9 5"/>
+      <rect x="7" y="13" width="3" height="3"/>
+      <rect x="14" y="13" width="3" height="3"/>
+      <path d="M10 21v-4h4v4"/>
+    </symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 21s7-6.5 7-11a7 7 0 0 0-14 0c0 4.5 7 11 7 11z"/>
+      <circle cx="12" cy="10" r="2.5"/>
+    </symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>
+      <path d="M14 3v5h5"/><path d="M9 13h6M9 16.5h6"/>
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="8" r="3"/>
+      <path d="M3 21v-1a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v1"/>
+      <path d="M16 5.5a3 3 0 0 1 0 6"/>
+      <path d="M18.5 15a4 4 0 0 1 2.5 3.7V20"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- Scroll progress -->
+<div id="scroll-progress"></div>
+
+<!-- Ambient background -->
+<div class="bg-ambient" aria-hidden="true">
+  <div class="bg-blob b1"></div>
+  <div class="bg-blob b2"></div>
+  <div class="bg-blob b3"></div>
+</div>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<!-- ═══════════════════════════════ NAVBAR ═══════════════════════════════ -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <img src="nfl1.png" alt="NeuronFRAMES" class="logo-img" />
+    </a>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html">Home</a>
+      <a href="platform.html">Platform</a>
+      <a href="impact.html">Impact</a>
+      <a href="partnership.html">Partnership</a>
+      <a href="research.html">Research</a>
+      <a href="awards.html">Awards</a>
+      <a href="system.html" class="nav-interactive">Interactive Journey</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button id="lang-toggle" class="lang-toggle" type="button" aria-label="Switch language" data-no-translate>
+        <svg class="lang-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 4 9 14 14 0 0 1-4 9 14 14 0 0 1-4-9 14 14 0 0 1 4-9z"/></svg><span class="lang-label">ไทย</span>
+      </button>
+      <a href="contact.html" class="btn btn-primary nav-cta">Get Involved</a>
+      <button id="nav-toggle" class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="nav-overlay" id="nav-overlay" aria-hidden="true"></div>
+<a id="main" tabindex="-1" aria-hidden="true"></a>
+<section id="research" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Research &amp; Progress</div>
+      <h2>Built on Research, <span class="gradient-text">Backed by Evidence</span></h2>
+      <p>Where we are today, where we're headed, the studies behind it, and the people building it.</p>
+    </div>
+    <div class="tabs-nav reveal" role="tablist">
+      <button class="tab-btn active" type="button" data-tab="rp-roadmap"><svg aria-hidden="true"><use href="#i-pin"/></svg>Roadmap</button>
+      <button class="tab-btn" type="button" data-tab="rp-pubs"><svg aria-hidden="true"><use href="#i-doc"/></svg>Publications <span class="tab-count">3</span></button>
+      <button class="tab-btn" type="button" data-tab="rp-team"><svg aria-hidden="true"><use href="#i-users"/></svg>Team</button>
+    </div>
+
+    <!-- Tab: Roadmap -->
+    <div class="tab-panel active" id="rp-roadmap">
+      <div class="tab-panel-head">
+        <h3>Roadmap &amp; Milestones</h3>
+        <p>From prototype, to peer-reviewed pilots, to daily clinical use, and onward to rehabilitation within reach of every patient in Thailand and beyond.</p>
+      </div>
+      <div class="roadmap">
+        <div class="road-item done">
+          <span class="road-phase done">2023 – 2024 · Foundations</span>
+          <h3>Prototype &amp; first deployments</h3>
+          <p>Built the core platform (pose detection, gamified exercises, and Arduino sensor integration) and ran early hands-on testing of the therapy modes.</p>
+        </div>
+        <div class="road-item done">
+          <span class="road-phase done">2025 · Published &amp; Piloted</span>
+          <h3>Peer-reviewed research &amp; supervised pilots</h3>
+          <p>Presented at ACM/IEEE HRI 2025 (People's Choice Award) and listed on IEEE Xplore; a stroke hand-rehabilitation chapter published with Springer (BioMRH 2025). Ran a hospital pilot at Burapha University Hospital (6–9 weeks) and a 3-month community field trial across 61 households.</p>
+        </div>
+        <div class="road-item done">
+          <span class="road-phase done">2025 · Into Clinical Practice</span>
+          <h3>Adopted at King Chulalongkorn Memorial Hospital</h3>
+          <p>NeuronFRAMES moved from pilot to routine use across the Department of Physical Medicine and Rehabilitation, now supporting <strong>250+ patients every month</strong> in inpatient, outpatient, and occupational-therapy settings.</p>
+        </div>
+        <div class="road-item now">
+          <span class="road-phase now">Now · Scaling Across Thailand</span>
+          <h3>More hospitals, deeper data, better clinician tools</h3>
+          <p>Expanding to additional rehabilitation departments and hospitals, strengthening the clinician dashboard and reporting, and advancing 10+ research projects that build the evidence base.</p>
+        </div>
+        <div class="road-item future">
+          <span class="road-phase next">Next · Clinical Validation</span>
+          <h3>Larger controlled studies</h3>
+          <p>Designing larger, controlled studies to test clinical efficacy across conditions, with multi-session trend analysis and exportable outcome reports for medical records.</p>
+        </div>
+        <div class="road-item future">
+          <span class="road-phase future">The Goal · Rehabilitation for Everyone</span>
+          <h3>Nationwide reach, and beyond</h3>
+          <p>Make effective rehabilitation affordable and available to every patient in Thailand who needs it (in hospitals, clinics, and at home), then extend the same model to under-served regions worldwide, following the appropriate regulatory pathway.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Publications -->
+    <div class="tab-panel" id="rp-pubs">
+      <div class="tab-panel-head">
+        <h3>Published Research</h3>
+        <p>Peer-reviewed work behind NeuronFRAMES, with 10+ further research projects in progress.</p>
+      </div>
+      <div class="publications">
+        <div class="pub-list">
+          <div class="pub-item">
+            <div class="pub-year">2025</div>
+            <div class="pub-info">
+              <h4><a href="https://dl.acm.org/doi/abs/10.5555/3721488.3721816" target="_blank" rel="noopener" style="color:var(--text-heading);text-decoration:underline;text-underline-offset:3px">Interactive Therapeutic Systems: A Gamified Approach to Physical Rehabilitation and Data Collection</a></h4>
+              <p>Chacharin Lertyosbordin, Maythus Tangprapa, Nuntipat Jiwasurat. Presented at ACM/IEEE HRI 2025; awarded People's Choice Award.</p>
+              <div class="journal">20th ACM/IEEE International Conference on Human-Robot Interaction (HRI 2025) · <a href="https://ieeexplore.ieee.org/document/10973829/" target="_blank" rel="noopener" style="color:var(--teal)">IEEE Xplore</a></div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year">2025</div>
+            <div class="pub-info">
+              <h4><a href="https://ieeexplore.ieee.org/document/10973829/" target="_blank" rel="noopener" style="color:var(--text-heading);text-decoration:underline;text-underline-offset:3px">Interactive Therapeutic Systems: A Gamified Approach to Hand Rehabilitation and AI-driven Support</a></h4>
+              <p>Chacharin Lertyosbordin, Maythus Tangprapa, Nuntipat Jiwasurat. IEEE Xplore record of the HRI 2025 paper.</p>
+              <div class="journal">2025 20th ACM/IEEE International Conference on Human-Robot Interaction (HRI) · IEEE Xplore</div>
+            </div>
+          </div>
+          <div class="pub-item">
+            <div class="pub-year" style="background:rgba(0,168,133,.12);color:var(--teal)">Published</div>
+            <div class="pub-info">
+              <h4><a href="https://link.springer.com/chapter/10.1007/978-3-032-14929-9_1" target="_blank" rel="noopener" style="color:var(--text-heading);text-decoration:underline;text-underline-offset:3px">A Hybrid Mirror Therapy and Gamified Rehabilitation System for Stroke Patients Using a Force-Sensitive Flappy Bird Interface</a></h4>
+              <p>Nuntipat Jiwasurat, Maythus Tangprapa, Filippo Sanfilippo. A gamified stroke-rehabilitation system combining mirror therapy with force-sensitive (FSR) input.</p>
+              <div class="journal">Book chapter: Biomechatronics and Robotics in Healthcare (BioMRH 2025) · Lecture Notes in Networks and Systems, Springer · Q4-ranked</div>
+            </div>
+          </div>
+        </div>
+        <p style="text-align:center;margin-top:1.8rem;font-size:.92rem;color:var(--muted)">Plus <strong style="color:var(--accent)">10+ ongoing research projects</strong> across computer vision, sensor integration, gamified therapy, and clinical outcome measurement.</p>
+      </div>
+    </div>
+
+    <!-- Tab: Team -->
+    <div class="tab-panel" id="rp-team">
+      <div class="tab-panel-head">
+        <h3>The Team Behind NeuronFRAMES</h3>
+        <p>Researchers and engineers working hand-in-hand with rehabilitation clinicians, and the authors of our publications.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar">CL</div>
+          <h3>Chacharin Lertyosbordin</h3>
+          <div class="team-role">Project Lead · Research</div>
+          <p>Leads the research direction and the work on interactive therapeutic systems presented at ACM/IEEE HRI 2025.</p>
+          <div class="team-tags"><span>Computer Vision</span><span>Rehab Tech</span><span>HRI</span></div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">MT</div>
+          <h3>Maythus Tangprapa</h3>
+          <div class="team-role">Co-Founder · Systems &amp; Clinical Liaison</div>
+          <p>Connects the platform with clinical partners, coordinates hospital deployments, and works across system design, data, and product.</p>
+          <div class="team-tags"><span>Clinical Pilots</span><span>Product</span><span>Data</span></div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">NJ</div>
+          <h3>Nuntipat Jiwasurat</h3>
+          <div class="team-role">Co-Founder · Engineering &amp; Hardware</div>
+          <p>Builds the sensor integration and gamified interfaces, including the force-sensitive hand-rehabilitation work published with Springer.</p>
+          <div class="team-tags"><span>Arduino / FSR</span><span>Web Games</span><span>Hardware</span></div>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">FS</div>
+          <h3>Prof. Filippo Sanfilippo</h3>
+          <div class="team-role">Academic Advisor · University of Agder</div>
+          <p>Advises on AI-driven rehabilitation, biomechatronics, and collaborative robotics via the University of Agder partnership.</p>
+          <div class="team-tags"><span>AI &amp; Robotics</span><span>Biomechatronics</span><span>Academia</span></div>
+        </div>
+      </div>
+      <p class="team-note">Supported by rehabilitation professionals at King Chulalongkorn Memorial Hospital, Burapha University Hospital, and Bangkok International Hospital, and academic partners at the University of Agder and Chulalongkorn University.</p>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+<section id="faq" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">Questions &amp; Answers</div>
+      <h2>Frequently Asked <span class="gradient-text">Questions</span></h2>
+      <p>The things people most often ask about NeuronFRAMES, answered plainly.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button"><span>Is NeuronFRAMES a medical device?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">No. NeuronFRAMES is currently a research and innovation project, not a certified or approved medical device. It is meant to be used as a therapy tool under the direction of licensed rehabilitation professionals, and it does not diagnose conditions or prescribe treatment.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button"><span>What equipment does a patient need?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">For most modes: a device with a modern web browser, a webcam, and an internet connection. The sensor-based mode (ITS) adds an optional low-cost Arduino kit (for example a force-sensitive grip sensor) for hand rehabilitation.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button"><span>Does it replace a physiotherapist or speech therapist?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">No. It is designed to extend and support clinical care (guiding prescribed exercises, keeping patients motivated between visits, and giving clinicians objective session data), not to replace professional assessment, hands-on therapy, or medical advice.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button"><span>How is patient data handled?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Session data (such as repetition counts, movement accuracy, grip force, reaction time, and speech scores) is collected to track rehabilitation progress, with a focus on data minimization, capturing only what therapy requires. Camera-based pose detection runs in the browser, and we do not sell patient data. Studies involving patients are run with appropriate institutional oversight and participant consent.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button"><span>Is there published evidence?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Work on the system has been presented at the 20th ACM/IEEE International Conference on Human-Robot Interaction (HRI 2025), where it received the People's Choice Award, and is listed on IEEE Xplore. A stroke hand-rehabilitation chapter is published with Springer (BioMRH 2025). See <a href="#research">Research &amp; Progress</a>. These are early-stage results; larger controlled studies are planned.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button"><span>Which conditions is it intended for?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">The therapy modes target common rehabilitation needs (physical/movement therapy, hand function, and speech), with work to date focused on areas such as stroke recovery and neurological/orthopedic rehabilitation. The right use for any individual patient is determined by their clinician.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button"><span>How does it reduce cost?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">By enabling more therapy to happen at home in a standard browser, it reduces hospital visits, transportation, and per-session fees. In pilot data, patients saw average savings of about $264/month, roughly a 47% reduction in out-of-pocket rehabilitation costs. See <a href="impact.html#pilot-results">Clinical Outcomes</a>.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button"><span>Can family members be involved?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Family-friendly training is a core part of the home-rehabilitation design: assisted exercises, shared therapy games, and routines that build accountability. Family involvement is associated with higher adherence and better outcomes. See <a href="platform.html#fft">Family Friendly Training</a>.</div></div>
+      </div>
+      <div class="faq-item reveal">
+        <button class="faq-q" type="button"><span>How can my clinic or institution get involved?</span><span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">We welcome collaboration with rehabilitation professionals, researchers, and educators, from clinical feedback to joint pilots and studies. Reach out via the <a href="contact.html">contact form</a> or email <a href="mailto:admin@neuronframes.com">admin@neuronframes.com</a>.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════ FOOTER ══════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <img src="nfl1.png" alt="NeuronFRAMES" class="logo-img" />
+        </div>
+        <p>An AI-assisted rehabilitation platform, in clinical use at King Chulalongkorn Memorial Hospital, making therapy more accessible, engaging, and measurable.</p>
+        <div class="footer-social">
+          <a class="social-btn" href="research.html" aria-label="Research and publications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/>
+            </svg>
+          </a>
+          <a class="social-btn" href="mailto:admin@neuronframes.com" aria-label="Email NeuronFRAMES">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"/>
+              <path d="M3 7l9 6 9-6"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <a href="index.html">Home</a>
+        <a href="platform.html">Platform &amp; Therapy</a>
+        <a href="impact.html">Impact &amp; Clinicians</a>
+        <a href="partnership.html">Partnership</a>
+        <a href="research.html">Research &amp; Progress</a>
+        <a href="awards.html">Awards &amp; Recognition</a>
+        <a href="system.html">Interactive Journey</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="platform.html#what-is">What It Is</a>
+        <a href="platform.html#how-it-works">How It Works</a>
+        <a href="platform.html#modes">Therapy Modes</a>
+        <a href="platform.html#training">Adaptive &amp; Family Training</a>
+      </div>
+      <div class="footer-col">
+        <h4>Impact &amp; Research</h4>
+        <a href="impact.html#pilot-results">Clinical Outcomes</a>
+        <a href="impact.html#quality-of-life">Quality of Life</a>
+        <a href="impact.html#ethics">Ethics &amp; Safety</a>
+        <a href="research.html#research">Publications &amp; Team</a>
+        <a href="research.html#faq">FAQ</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 <span>NeuronFRAMES</span></div>
+      <div>Advancing Accessible Rehabilitation Through <span>Clinical Technology</span></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════ SCRIPTS ══════════════════════════════════ -->
+<script src="main.js"></script>
+<script src="th-cache.js"></script>
+<script src="lang-toggle.js"></script>
+</body>
+</html>
